@@ -52,3 +52,7 @@
 - **Auth**: JWT-based auth stored in HttpOnly cookies.
 
 # How to use?
+
+---
+
+# What I've learned
