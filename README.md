@@ -7,21 +7,19 @@
 ---
 
 # 🚀 Features
-## 🛍️ User Features
+  ## 🛍️ User Features
+  - User registration & login (JWT + Cookies) or signin with Google
+  - Browse products with filters & search
+  - Shopping cart and wishlist
+  - Secure checkout with address info
+  - View order history & details
+  - Dark/Light mode toggle
 
-- User registration & login (JWT + Cookies) or signin with Google
-- Browse products with filters & search
-- Shopping cart and wishlist
-- Secure checkout with address info
-- View order history & details
-- Dark/Light mode toggle
-
-## 🔐 Admin Features
-
-- Admin login & protected dashboard
-- Add / Edit / Delete products
-- Manage orders & order status
-- View users & statistics (sales, top products)
+  ## 🔐 Admin Features
+  - Admin login & protected dashboard
+  - Add / Edit / Delete products
+  - Manage orders & order status
+  - View users & statistics (sales, top products)
 
 ---
 
