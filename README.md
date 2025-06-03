@@ -2,7 +2,7 @@
 
 **👕 AuraWear** is a modern e-commerce platform built with Next.js and Express.js, offering stylish, casual clothing for men and women of all ages. Our mission is to streamline the online shopping experience through an intuitive interface, responsive design, and powerful features like price, size, and color filtering, paired with seamless Google authentication. Designed for ease of use and accessibility, **AuraWear** delivers a visually appealing shopping experience across all devices, making fashion effortless and inclusive for everyone.
 
-# 📸 Preview
+## 📸 Preview
 
 ![AuraWear Preview](./public/preview.png)
 
