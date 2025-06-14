@@ -1,0 +1,27 @@
+{
+  "name": "aura_wear-backend",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehabsmh/AuraWear.git"
+  },
+  "author": "Ehab Hussein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehabsmh/AuraWear/issues"
+  },
+  "homepage": "https://github.com/ehabsmh/AuraWear#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.15.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3"
+  }
+}
