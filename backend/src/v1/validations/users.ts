@@ -12,7 +12,10 @@ const userValidationSchema = Joi.object({
   postalCode: Joi.string().min(3).max(6).required(),
   phone: Joi.string()
     .pattern(/^01[0125]\d{8}$/)
-    .required(),
+    .required()
+    .messages({
+      "string.pattern.base": "Invalid phone number",
+    }),
 });
 
 export default userValidationSchema;
