@@ -1,10 +1,10 @@
 import express, { NextFunction, Request, Response } from "express";
 import "dotenv/config";
 import DB from "./v1/database/db";
-import usersRouter from "./v1/views/users";
 import router from "./v1/views/api";
 import AppError from "./v1/service/error";
 import cookieParser from "cookie-parser";
+import initializeGoogleAuth from "./v1/service/googleAuth";
 const app = express();
 const port = 3000;
 
@@ -17,10 +17,16 @@ export const {
   APP_DOMAIN,
   APP_PORT,
   ON_PRODUCTION,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
 } = process.env;
+
 export const db = new DB();
 
 app.use([express.json(), cookieParser()]);
+
+initializeGoogleAuth(app);
+
 app.use("/api/v1", router);
 
 app.use(
@@ -36,7 +42,7 @@ app.use(
         .json({ error: { name: error.name, message: error.message } });
       return;
     }
-
+    console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
 );

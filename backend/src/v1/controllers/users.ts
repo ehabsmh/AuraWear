@@ -269,6 +269,32 @@ class UsersController {
       res.status(500).json({ error: "Something went wrong with the server." });
     }
   }
+
+  static async googleLogin(req: Request, res: Response, next: NextFunction) {
+    /* This method handles the Google login process. It is called when the user is redirected back from Google after authentication. */
+    try {
+      // The user object is added to the request by the passport-google-oauth20 strategy
+      const user = req.user as any; // Cast to any to avoid TypeScript errors
+      if (!user) {
+        throw new AppError("User not found.", NotFoundError, 404);
+      }
+
+      if (!SECRET_KEY) throw new Error("Secret key is not defined.");
+      const token = jwt.sign(user.toJSON(), SECRET_KEY);
+
+      res.cookie("Authorization", token, {
+        httpOnly: true, // Prevent JavaScript access (XSS protection)
+        sameSite: "strict", // Prevent CSRF attacks
+        secure: ON_PRODUCTION === "true", // Use secure cookies in production
+      });
+
+      res.json({ message: `Welcome ${user.fullName}` });
+      // res.redirect('http://localhost:5173/'); // Redirect to the next step
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 
 export default UsersController;
