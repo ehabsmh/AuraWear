@@ -2,7 +2,7 @@ import { Model, model, Schema } from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 
-interface IUser {
+export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
