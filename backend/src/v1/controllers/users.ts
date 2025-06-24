@@ -57,8 +57,7 @@ class UsersController {
       if (result.error) {
         throw new AppError(
           JSON.stringify(result.error.details),
-          ErrorName.ValidationError,
-          400
+          ErrorName.ValidationError
         );
       }
 
@@ -107,24 +106,23 @@ class UsersController {
     try {
       // Get user
       const user = await User.findOne({ email });
-      if (!user) throw new AppError("User not found.", NotFoundError, 404);
+      if (!user) throw new AppError("User not found.", NotFoundError);
 
       // Check if user is already verified.
       if (user.verified)
-        throw new AppError("User already verified.", BadRequestError, 400);
+        throw new AppError("User already verified.", BadRequestError);
 
       // Check if the verification code has been expired.
       if (user.isVerificationCodeExpired()) {
         throw new AppError(
           "The verification code has been expired.",
-          BadRequestError,
-          400
+          BadRequestError
         );
       }
 
       // throw error if verification code is incorrect.
       if (code !== user.verificationCode) {
-        throw new AppError("Incorrect code.", AuthorizationError, 401);
+        throw new AppError("Incorrect code.", AuthorizationError);
       }
 
       // Delete verification keys since will not be used anymore and verify user.
@@ -159,18 +157,17 @@ class UsersController {
     const { email } = req.body;
     try {
       const user = await User.findOne({ email });
-      if (!user) throw new AppError("User not found.", NotFoundError, 404);
+      if (!user) throw new AppError("User not found.", NotFoundError);
 
       // Check if user is already verified.
       if (user.verified)
-        throw new AppError("User already verified.", BadRequestError, 400);
+        throw new AppError("User already verified.", BadRequestError);
 
       // Check if the verification code has been expired.
       if (!user.isVerificationCodeExpired()) {
         throw new AppError(
           "You can only request a new verification code after the previous one has expired.",
-          BadRequestError,
-          400
+          BadRequestError
         );
       }
 
@@ -192,41 +189,34 @@ class UsersController {
     const { email, password } = req.body;
 
     try {
-      if (!email)
-        throw new AppError("email field is required.", RequireError, 400);
+      // Check if no email or password is provided
+      if (!email) throw new AppError("email field is required.", RequireError);
       if (!password)
-        throw new AppError("password field is required.", RequireError, 400);
+        throw new AppError("password field is required.", RequireError);
 
+      // Find the user by email
       const user = await User.findOne({ email });
       if (!user)
-        throw new AppError(
-          "Incorrect email or password.",
-          AuthorizationError,
-          401
-        );
+        throw new AppError("Incorrect email or password.", AuthorizationError);
 
       // Comparing original password with the hashed password.
       const isMatching = await user.comparePassword(password);
       if (!isMatching)
-        throw new AppError(
-          "Incorrect email or password.",
-          AuthorizationError,
-          401
-        );
+        throw new AppError("Incorrect email or password.", AuthorizationError);
 
       // Check if the user has not verified his account.
-      if (user && isMatching && !user.verified) {
+      if (!user.verified) {
         if (user.isVerificationCodeExpired()) {
+          // If the user is not verified and the verification code has expired, resend the verification code and return a 403 status
           await sendVerificationCode(user);
 
-          // If the user is not verified, resend the verification code and return a 403 status
           res.status(403).json({
             message:
               "Code has been resent to your email, Please verify your account before logging in.",
             verificationUrl: `${APP_DOMAIN}:${APP_PORT}/verify?email=${user.email}`,
           });
         } else {
-          // If the user is not verified, return a 403 status
+          // If the user is not verified and the verification code is still valid, return a 403 status with a message
           res.status(403).json({
             message: "Please verify your account before logging in.",
             verificationUrl: `${APP_DOMAIN}:${APP_PORT}/verify?email=${user.email}`,
@@ -256,7 +246,8 @@ class UsersController {
   static async logout(req: Request, res: Response): Promise<void> {
     try {
       // Check if the user isn't logged in by checking the Authorization cookie
-      if (!req.cookies.Authorization) {
+      const user = req.user as any; // Cast to any to avoid TypeScript errors
+      if (!user && !req.cookies.Authorization) {
         res.status(400).json({ message: "User is not logged in." });
         return;
       }
@@ -276,7 +267,7 @@ class UsersController {
       // The user object is added to the request by the passport-google-oauth20 strategy
       const user = req.user as any; // Cast to any to avoid TypeScript errors
       if (!user) {
-        throw new AppError("User not found.", NotFoundError, 404);
+        throw new AppError("User not found.", NotFoundError);
       }
 
       if (!SECRET_KEY) throw new Error("Secret key is not defined.");
