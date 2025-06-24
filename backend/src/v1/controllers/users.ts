@@ -129,8 +129,9 @@ class UsersController {
       user.verified = true;
       user.verificationCode = undefined;
       user.verificationCodeExpires = undefined;
-      user.password = undefined;
       await user.save();
+
+      user.password = undefined;
 
       if (!SECRET_KEY) throw new Error("Secret key is not defined.");
 
@@ -227,6 +228,9 @@ class UsersController {
       }
 
       if (!SECRET_KEY) throw new Error("Secret key is not defined.");
+
+      user.password = undefined; // Remove password from user object before signing the token
+
       const token = jwt.sign(user.toJSON(), SECRET_KEY);
 
       res.cookie("Authorization", token, {
