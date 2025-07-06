@@ -45,12 +45,12 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
     },
     email: {
       type: String,
-      required() {
-        return !this.googleId; // Only require firstName if googleId is not set
-      },
       unique: true,
       lowercase: true,
       trim: true,
+      required() {
+        return !this.googleId; // Only require firstName if googleId is not set
+      },
     },
     password: {
       type: String,
@@ -90,6 +90,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
     },
     phone: {
       type: String,
+      unique: true,
       required() {
         return !this.googleId; // Only require firstName if googleId is not set
       },
@@ -109,7 +110,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
     googleId: {
       type: String,
       unique: true,
-      sparse: true, // Allows for unique values but allows multiple nulls
+      sparse: true, // Allows for unique constraint to be applied only when googleId is present
       default: undefined,
     },
   },
@@ -146,5 +147,6 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
 // });
 
 const User = model("User", UserSchema);
+User.init(); // Initialize the model to create indexes
 
 export default User;

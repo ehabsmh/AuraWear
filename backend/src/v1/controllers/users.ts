@@ -5,7 +5,6 @@ import AppError, { ErrorName } from "../service/error";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
 import sendVerificationCode from "../service/email";
-import crypto from "crypto";
 import { APP_DOMAIN, APP_PORT, ON_PRODUCTION, SECRET_KEY } from "../..";
 
 const {
@@ -33,6 +32,7 @@ class UsersController {
         postalCode,
         phone,
         avatar,
+        role,
       } = req.body;
 
       // Validate user input
@@ -76,6 +76,7 @@ class UsersController {
         postalCode,
         phone,
         avatar: avatar || "https://example.com/default-avatar.png", // Default avatar if not provided
+        role,
       });
 
       // Send the verification code to the user's email
@@ -87,12 +88,15 @@ class UsersController {
       });
     } catch (error) {
       if ((error as any).code === 11000) {
-        res.status(409).json({
-          error: {
-            name: "ConflictError",
-            message: "Email already exists",
-          },
-        });
+        if ((error as any).keyPattern?.email) {
+          throw new AppError("Email already exists", ErrorName.ConflictError);
+        }
+        if ((error as any).keyPattern?.phone) {
+          throw new AppError(
+            "Phone number already exists",
+            ErrorName.ConflictError
+          );
+        }
       }
 
       next(error);
@@ -250,7 +254,7 @@ class UsersController {
   static async logout(req: Request, res: Response): Promise<void> {
     try {
       // Check if the user isn't logged in by checking the Authorization cookie
-      const user = req.user as any; // Cast to any to avoid TypeScript errors
+      const user = req.user as any;
       if (!user && !req.cookies.Authorization) {
         res.status(400).json({ message: "User is not logged in." });
         return;
@@ -286,7 +290,6 @@ class UsersController {
       res.json({ message: `Welcome ${user.fullName}` });
       // res.redirect('http://localhost:5173/'); // Redirect to the next step
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
