@@ -81,7 +81,7 @@ class UsersController {
 
       // Send the verification code to the user's email
       await sendVerificationCode(newUser);
-      res.json({
+      res.status(201).json({
         message:
           "User registered successfully, Check your email for verification code.",
         data: newUser,
@@ -153,6 +153,7 @@ class UsersController {
 
       res.json({ message: "User verified successfully." });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -186,6 +187,7 @@ class UsersController {
 
       res.json({ message: "Verification code has been resent to your email." });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }

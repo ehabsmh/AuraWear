@@ -1,8 +1,10 @@
-import { Model, model, Schema } from "mongoose";
+import { Model, model, Schema, Types } from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import Cart from "./cart";
 
 export interface IUser {
+  _id?: Types.ObjectId;
   firstName: string;
   lastName: string;
   email: string;
@@ -136,15 +138,13 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
     },
   }
 );
-// UserSchema.index({ email: 1 }, { unique: true });
 
-// UserSchema.methods.isVerificationCodeExpired = function () {
-//   return Date.now() >= this.verificationCodeExpires.getTime();
-// };
+UserSchema.post("save", async function (this: IUser) {
+  const cartExists = await Cart.exists({ userId: this._id });
+  if (cartExists) return; // If cart already exists, do nothing
 
-// UserSchema.virtual("fullName").get(function () {
-//   return `${this.firstName} ${this.lastName}`;
-// });
+  await Cart.create({ userId: this._id });
+});
 
 const User = model("User", UserSchema);
 User.init(); // Initialize the model to create indexes
