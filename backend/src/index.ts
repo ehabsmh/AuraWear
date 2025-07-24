@@ -5,8 +5,16 @@ import router from "./v1/views/api";
 import AppError from "./v1/service/error";
 import cookieParser from "cookie-parser";
 import initializeGoogleAuth from "./v1/service/googleAuth";
+import cors from "cors";
 const app = express();
-const port = 3000;
+const port = 8080;
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 // Get all environment variables
 export const {
@@ -42,7 +50,7 @@ app.use(
         .json({ error: { name: error.name, message: error.message } });
       return;
     }
-
+    console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
 );

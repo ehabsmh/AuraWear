@@ -106,10 +106,16 @@ export default class CategoriesController {
       next(error);
     }
   }
-  static async bySex(req: Request, res: Response, next: NextFunction) {
+  static async get(req: Request, res: Response, next: NextFunction) {
     const { sex } = req.query;
     try {
-      const categories = await Category.find({ sex });
+      const filter: any = {};
+
+      if (sex) {
+        filter.sex = sex;
+      }
+
+      const categories = await Category.find(filter);
       if (!categories.length)
         throw new AppError("No categories found.", ErrorName.NotFoundError);
 

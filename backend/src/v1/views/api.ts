@@ -9,9 +9,9 @@ import cartRouter from "./cart";
 const router = express.Router();
 
 router.use("/auth", usersRouter);
-router.use("/categories", auth, categoriesRouter);
-router.use("/subcategories", auth, subcategoriesRouter);
-router.use("/products", auth, productsRouter);
+router.use("/categories", categoriesRouter);
+router.use("/subcategories", subcategoriesRouter);
+router.use("/products", productsRouter);
 router.use("/cart", auth, cartRouter);
 
 export default router;

@@ -11,22 +11,27 @@ export async function addImagesToProduct(
   }
 
   const uploadPromises = images.map(async (image) => {
-    const [variantIndex, propName] = image.fieldname.split(".").slice(1);
-    const variantIndexNum = Number(variantIndex);
+    if (image.fieldname === "mainImage") {
+      const url = await uploadStream(image, "products");
+      product.mainImage = url;
+    } else {
+      const [variantIndex, propName] = image.fieldname.split(".").slice(1);
+      const variantIndexNum = Number(variantIndex);
 
-    if (!product.variants[variantIndexNum]) {
-      throw new AppError(
-        `Variant at index ${variantIndexNum} does not exist`,
-        ErrorName.BadRequestError
-      );
+      if (!product.variants[variantIndexNum]) {
+        throw new AppError(
+          `Variant at index ${variantIndexNum} does not exist`,
+          ErrorName.BadRequestError
+        );
+      }
+
+      if (!product.variants[variantIndexNum].images) {
+        product.variants[variantIndexNum].images = [];
+      }
+
+      const url = await uploadStream(image, "products");
+      product.variants[variantIndexNum].images.push(url);
     }
-
-    if (!product.variants[variantIndexNum].images) {
-      product.variants[variantIndexNum].images = [];
-    }
-
-    const url = await uploadStream(image, "products");
-    product.variants[variantIndexNum].images.push(url);
   });
 
   await Promise.all(uploadPromises); // ⏱️ Upload all in parallel

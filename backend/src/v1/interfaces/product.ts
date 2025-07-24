@@ -23,6 +23,7 @@ export interface IProduct {
   discountPrice?: number;
   categoryId: Schema.Types.ObjectId;
   subcategoryId: Schema.Types.ObjectId;
+  mainImage?: string;
   variants: IVariant[];
   sold?: number;
 }

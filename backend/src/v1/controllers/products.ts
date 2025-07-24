@@ -3,7 +3,7 @@ import Product from "../models/product";
 import { addImagesToProduct } from "../service/products";
 import { createProductSchema } from "../validations/products";
 import AppError, { ErrorName } from "../service/error";
-import { deleteImages } from "../service/cloudinary-handling";
+import { deleteImages, uploadStream } from "../service/cloudinary-handling";
 import { getPaginatedProducts } from "../utils/products";
 
 class ProductsController {
@@ -38,6 +38,7 @@ class ProductsController {
 
       res.status(201).json({ message: "Product added successfully", product });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -112,7 +113,8 @@ class ProductsController {
 
   static async all(req: Request, res: Response, next: NextFunction) {
     try {
-      const { slug, sex, categoryId, subcategoryId } = req.query;
+      const { slug, sex, category, subcategoryId, priceMin, priceMax } =
+        req.query;
 
       // If slug is provided, return the single product
       if (slug) {
@@ -129,8 +131,13 @@ class ProductsController {
       // Build filter object dynamically
       const filter: any = {};
       if (sex) filter.sex = sex;
-      if (categoryId) filter.categoryId = categoryId;
+      if (category) filter.categoryId = category;
       if (subcategoryId) filter.subcategoryId = subcategoryId;
+      if (priceMin && !priceMax) filter.price = { $gte: Number(priceMin) };
+      if (priceMax && !priceMin) filter.price = { $lte: Number(priceMax) };
+      if (priceMin && priceMax) {
+        filter.price = { $gte: Number(priceMin), $lte: Number(priceMax) };
+      }
 
       const result = await getPaginatedProducts(req.query, filter);
       res.json(result);

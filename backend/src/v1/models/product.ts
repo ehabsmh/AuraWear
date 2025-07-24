@@ -54,6 +54,7 @@ const ProductSchema = new Schema<IProduct>(
     discountPrice: Number,
     categoryId: { type: Types.ObjectId, ref: "Category" },
     subcategoryId: { type: Types.ObjectId, ref: "Subcategory" },
+    mainImage: String,
     variants: [VariantSchema],
     sold: { type: Number, default: 0 },
   },
