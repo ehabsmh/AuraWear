@@ -1,5 +1,6 @@
 import Filters from "@/app/_components/customers/filters/Filters";
 import Products from "@/app/_components/customers/products/Products";
+import { IProduct } from "@/interfaces/Product";
 import { fetchProducts } from "@/services/products";
 
 interface PageProps {
@@ -18,9 +19,14 @@ async function Page({ searchParams }: PageProps) {
   // const size = params?.size ?? null;
   // const price = params?.price ?? null;
 
-  const { products, totalPages, totalItems, limit } = await fetchProducts(
+  const { products, totalPages, totalItems, limit } = (await fetchProducts(
     params
-  );
+  )) as {
+    products: IProduct[];
+    totalPages: number;
+    totalItems: number;
+    limit: number;
+  };
 
   return (
     <section>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 // import { Star } from "lucide-react";
 import { IProduct } from "@/interfaces/Product";
+import Link from "next/link";
 
 type ProductCardProps = {
   product: IProduct;
@@ -21,14 +22,16 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
       )} */}
 
-      <div className="w-full aspect-[3/4] overflow-hidden rounded-md bg-gray-100">
-        <Image
-          src={product.mainImage || "/men-fashion.jpg"}
-          alt={product.name}
-          width={300}
-          height={400}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+      <div className="w-full aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
+        <Link href={`/shop/${product.slug}`}>
+          <Image
+            src={product.mainImage || "/men-fashion.jpg"}
+            alt={product.name}
+            width={300}
+            height={400}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </Link>
       </div>
 
       <div className="mt-2 space-y-1">

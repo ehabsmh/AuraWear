@@ -17,6 +17,7 @@ const SizeSchema = new Schema<ISize>(
 const VariantSchema = new Schema<IVariant>(
   {
     color: String,
+    colorCode: String,
     sizes: [SizeSchema],
     images: [String],
     mainImage: String,

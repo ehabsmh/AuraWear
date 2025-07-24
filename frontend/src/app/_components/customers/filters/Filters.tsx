@@ -1,10 +1,7 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Categories from "./Categories";
-import FilterColors from "./FilterColors";
 import FilterPrice from "./FilterPrice";
-import FilterSizes from "./FilterSizes";
-import FilterStatus from "./FilterStatus";
 
 function Filters() {
   const searchParams = useSearchParams();
@@ -28,6 +25,7 @@ function Filters() {
 
     router.replace(`${pathname}?${params.toString()}`);
   }
+
   return (
     <div id="filters" className="bg-white/30 p-4 rounded shadow">
       <Categories
@@ -38,7 +36,7 @@ function Filters() {
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
       />
-      <FilterColors
+      {/* <FilterColors
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
       />
@@ -49,7 +47,7 @@ function Filters() {
       <FilterStatus
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
-      />
+      /> */}
     </div>
   );
 }
