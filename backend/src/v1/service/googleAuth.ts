@@ -13,7 +13,7 @@ function initializeGoogleAuth(app: express.Application) {
       {
         clientID: GOOGLE_CLIENT_ID!,
         clientSecret: GOOGLE_CLIENT_SECRET!,
-        callbackURL: "http://localhost:3000/api/v1/auth/google/callback",
+        callbackURL: "http://localhost:8080/api/v1/auth/google/callback",
       },
       async function (accessToken, refreshToken, profile, cb) {
         let user = await User.findOne({ googleId: profile.id });

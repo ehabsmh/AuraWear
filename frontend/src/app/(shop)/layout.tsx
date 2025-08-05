@@ -1,8 +1,7 @@
 import Footer from "../_ui/customers/Footer";
 import Navbar from "../_ui/customers/Navbar";
-// import Footer from "../_ui/customers/Footer";
 
-export default function ShopLayout({
+export default async function ShopLayout({
   children,
 }: {
   children: React.ReactNode;

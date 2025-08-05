@@ -7,11 +7,17 @@ import { usePathname } from "next/navigation";
 import { BiUser } from "react-icons/bi";
 import Image from "next/image";
 import { CgShoppingCart } from "react-icons/cg";
+import { logout } from "@/services/users";
+import { useAuth } from "@/app/context/AuthContext";
 
 const Navbar = () => {
+  const { user, setUser, loading } = useAuth();
+
   const pathname = usePathname();
-  const isLoggedIn = false; // Replace with real auth check
+  const isLoggedIn = Boolean(user); // Replace with real auth check
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const router = useRouter();
 
   return (
     <nav className="bg-white px-6 flex items-center justify-between h-28">
@@ -64,12 +70,16 @@ const Navbar = () => {
       <div className="flex items-center gap-6 relative">
         {/* User Icon */}
         <div className="relative">
-          <button
-            onClick={() => setDropdownOpen((prev) => !prev)}
-            className="hover:text-secondary duration-200"
-          >
-            <BiUser className="text-2xl" />
-          </button>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <button
+              onClick={() => setDropdownOpen((prev) => !prev)}
+              className="hover:text-secondary duration-200"
+            >
+              <BiUser className="text-2xl" />
+            </button>
+          )}
 
           {/* Dropdown */}
           {dropdownOpen && (
@@ -105,8 +115,10 @@ const Navbar = () => {
                   </Link>
                   <button
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => {
-                      // logout logic
+                    onClick={async () => {
+                      await logout();
+                      setUser(null);
+                      setDropdownOpen(false);
                     }}
                   >
                     Logout
@@ -123,7 +135,6 @@ const Navbar = () => {
           className="hover:text-secondary duration-200 relative"
         >
           <CgShoppingCart className="text-2xl" />
-          {/* example count */}
           <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
             3
           </span>

@@ -47,7 +47,7 @@ app.use(
     if (error instanceof AppError) {
       res
         .status(error.statusCode)
-        .json({ error: { name: error.name, message: error.message } });
+        .json({ name: error.name, message: error.message });
       return;
     }
     console.log(error);

@@ -68,34 +68,20 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
     },
     birthDate: {
       type: Date,
-      required() {
-        return !this.googleId; // Only require firstName if googleId is not set
-      },
     },
     city: {
       type: String,
-      required() {
-        return !this.googleId; // Only require firstName if googleId is not set
-      },
     },
     address: {
       type: String,
-      required() {
-        return !this.googleId; // Only require firstName if googleId is not set
-      },
     },
     postalCode: {
       type: String,
-      required() {
-        return !this.googleId; // Only require firstName if googleId is not set
-      },
     },
     phone: {
       type: String,
       unique: true,
-      required() {
-        return !this.googleId; // Only require firstName if googleId is not set
-      },
+      sparse: true,
     },
     avatar: {
       type: String,

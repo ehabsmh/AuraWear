@@ -148,3 +148,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.input {
+  @apply w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-secondary-light;
+}

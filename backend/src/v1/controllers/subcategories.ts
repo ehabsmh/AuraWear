@@ -87,7 +87,7 @@ class SubcategoriesController {
           ErrorName.BadRequestError
         );
 
-      const categoryFound = await Category.findOne({ slug: category, sex });
+      const categoryFound = await Category.findById(category);
       if (!categoryFound)
         throw new AppError("Category not found.", ErrorName.NotFoundError);
 
@@ -95,11 +95,11 @@ class SubcategoriesController {
         categoryId: categoryFound._id,
       });
       if (!subcategories.length) {
-        res.status(404).json({ subcategories });
+        res.status(404).json(subcategories);
         return;
       }
 
-      res.json({ subcategories });
+      res.json(subcategories);
     } catch (err) {
       next(err);
     }

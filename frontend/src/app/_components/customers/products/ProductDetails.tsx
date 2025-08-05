@@ -5,9 +5,11 @@ import Image from "next/image";
 import Variants from "./Variants";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { HeartPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/app/context/AuthContext";
 
 function ProductDetails({ product }: { product: IProduct }) {
+  const { user } = useAuth();
   const [variantIndex, setVariantIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState(
@@ -21,6 +23,11 @@ function ProductDetails({ product }: { product: IProduct }) {
   function handleSizeChange(index: number) {
     setSizeIndex(index);
   }
+
+  useEffect(() => {
+    setSelectedImage(product.variants[variantIndex].images[0]);
+    setSizeIndex(0);
+  }, [product.variants, variantIndex]);
 
   return (
     <>
@@ -44,7 +51,9 @@ function ProductDetails({ product }: { product: IProduct }) {
               width={50}
               height={50}
               quality={100}
-              className="w-32 h-24 object-contain rounded-lg mt-4 cursor-pointer hover:scale-105 transition duration-150"
+              className={`w-32 h-24 object-contain rounded-lg mt-4 cursor-pointer hover:scale-105 transition duration-150 ${
+                selectedImage === image ? "border-2 border-secondary-light" : ""
+              }`}
             />
           ))}
         </div>
@@ -108,7 +117,14 @@ function ProductDetails({ product }: { product: IProduct }) {
                 </button>
               </div>
               <div className="flex gap-4">
-                <button className="bg-secondary-light text-white px-4 py-2 rounded hover:bg-secondary transition duration-150">
+                <button
+                  onClick={() =>
+                    user
+                      ? alert("Added to cart")
+                      : alert("Please login to add to cart")
+                  }
+                  className="bg-secondary-light text-white px-4 py-2 rounded hover:bg-secondary transition duration-150"
+                >
                   Add to Cart
                 </button>
                 <div className="flex items-center bg-gray-300 text-black gap-2 px-4 py-2 rounded hover:bg-gray-500 transition duration-150">

@@ -9,6 +9,7 @@ export const sizeSchema = Joi.object({
 
 export const variantSchema = Joi.object({
   color: Joi.string().trim().required(),
+  colorCode: Joi.string().trim().required(),
   sizes: Joi.array().items(sizeSchema).min(1).required(),
   images: Joi.array().items(Joi.string().uri()).max(4),
   // mainImage: Joi.string().uri().required(),

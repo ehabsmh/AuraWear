@@ -13,8 +13,8 @@ export const uploadStream = async (file: any, folderName: string) => {
   const result: any = await new Promise((resolve, reject) => {
     const timeout = setTimeout(
       () => reject(new AppError("Upload timeout", ErrorName.ValidationError)),
-      20000
-    ); // 20 sec timeout
+      60000
+    ); // 60 sec timeout
     const stream = cloudinary.uploader.upload_stream(
       {
         folder: `aura-wear/${folderName}`,

@@ -289,12 +289,14 @@ class UsersController {
         secure: ON_PRODUCTION === "true", // Use secure cookies in production
       });
 
+      res.redirect("http://localhost:3000/"); // Redirect to the next step
       res.json({ message: `Welcome ${user.fullName}` });
-      // res.redirect('http://localhost:5173/'); // Redirect to the next step
     } catch (error) {
       next(error);
     }
   }
+
+  static async me(req: Request, res: Response, next: NextFunction) {}
 }
 
 export default UsersController;

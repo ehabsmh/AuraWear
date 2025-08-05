@@ -10,7 +10,6 @@ function Filters() {
 
   // Log all search params as an object
   const currentParams = Object.fromEntries(searchParams.entries());
-  console.log(currentParams);
 
   function updateFilters(updates: Record<string, string | null>) {
     const params = new URLSearchParams(searchParams);
@@ -19,6 +18,9 @@ function Filters() {
       if (value === null) {
         params.delete(key);
       } else {
+        if (key === "category") {
+          params.delete("subcategory"); // Clear subcategory if category is updated
+        }
         params.set(key, value);
       }
     }

@@ -113,7 +113,7 @@ class ProductsController {
 
   static async all(req: Request, res: Response, next: NextFunction) {
     try {
-      const { slug, sex, category, subcategoryId, priceMin, priceMax } =
+      const { slug, sex, category, subcategory, priceMin, priceMax } =
         req.query;
 
       // If slug is provided, return the single product
@@ -132,7 +132,7 @@ class ProductsController {
       const filter: any = {};
       if (sex) filter.sex = sex;
       if (category) filter.categoryId = category;
-      if (subcategoryId) filter.subcategoryId = subcategoryId;
+      if (subcategory) filter.subcategoryId = subcategory;
       if (priceMin && !priceMax) filter.price = { $gte: Number(priceMin) };
       if (priceMax && !priceMin) filter.price = { $lte: Number(priceMax) };
       if (priceMin && priceMax) {

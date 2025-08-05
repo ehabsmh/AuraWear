@@ -43,8 +43,10 @@
 //   );
 // }
 
+import { AuthProvider } from "./context/AuthContext";
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({
@@ -67,7 +69,8 @@ export default function RootLayout({
       <body
         className={`bg-main ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Toaster />
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
