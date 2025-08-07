@@ -141,6 +141,7 @@ class CartController {
   static async getCart(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.userr?._id;
+      console.log(userId);
 
       // find the cart for the user
       const cart = await Cart.findOne({ userId }).populate("items");
@@ -154,6 +155,7 @@ class CartController {
         cart,
       });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }

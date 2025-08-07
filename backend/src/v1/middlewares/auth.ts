@@ -5,7 +5,6 @@ import { IUser } from "../models/user";
 
 function auth(req: Request, res: Response, next: NextFunction) {
   const token = req.cookies["Authorization"];
-
   if (!token) {
     res.status(401).send("Access denied. No token provided.");
     return;

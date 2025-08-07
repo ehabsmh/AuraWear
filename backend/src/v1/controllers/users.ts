@@ -26,11 +26,6 @@ class UsersController {
         email,
         password,
         confirmPassword,
-        birthDate,
-        city,
-        address,
-        postalCode,
-        phone,
         avatar,
         role,
       } = req.body;
@@ -43,11 +38,6 @@ class UsersController {
           email,
           password,
           confirmPassword,
-          birthDate,
-          city,
-          address,
-          postalCode,
-          phone,
         },
         {
           abortEarly: false,
@@ -70,11 +60,6 @@ class UsersController {
         lastName,
         email,
         password: hashedPw,
-        birthDate: new Date(birthDate),
-        city,
-        address,
-        postalCode,
-        phone,
         avatar: avatar || "https://example.com/default-avatar.png", // Default avatar if not provided
         role,
       });
@@ -240,14 +225,14 @@ class UsersController {
       const token = jwt.sign(user.toJSON(), SECRET_KEY);
 
       res.cookie("Authorization", token, {
-        httpOnly: true, // Prevent JavaScript access (XSS protection)
-        sameSite: "strict", // Prevent CSRF attacks
-        secure: ON_PRODUCTION === "true", // Use secure cookies in production
+        httpOnly: true,
         path: "/",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // Set expiration time (e.g., 7 days)
+        sameSite: "lax",
+        secure: false,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
-      res.json({ message: `Welcome ${user.fullName}` });
+      res.json({ message: `Welcome ${user.fullName}`, user });
     } catch (error) {
       next(error);
     }
@@ -262,8 +247,10 @@ class UsersController {
         return;
       }
       res.clearCookie("Authorization", {
+        httpOnly: true,
+        secure: false, // ✅ false in dev (no HTTPS on localhost)
+        sameSite: "lax", // ✅ must be "none" to allow cross-origin
         path: "/",
-        secure: ON_PRODUCTION === "true",
       });
       res.status(200).json({ message: "User logged out successfully." });
     } catch (err) {

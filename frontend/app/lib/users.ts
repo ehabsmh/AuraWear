@@ -1,0 +1,91 @@
+import { AxiosError } from "axios";
+import { toast } from "sonner";
+import { IUser } from "../interfaces/User";
+import api from "../config/axios.config";
+
+export async function signup(userData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  avatar?: FileList | null;
+}) {
+  try {
+    // const formData = new FormData();
+    // console.log("userData", userData);
+    // formData.append("firstName", userData.firstName);
+    // formData.append("lastName", userData.lastName);
+    // formData.append("email", userData.email);
+    // formData.append("password", userData.password);
+    // if (userData.avatar) {
+    //   formData.append("avatar", userData.avatar[0]);
+    // }
+
+    const { data }: { data: { message: string; user: IUser } } = await api.post(
+      "/auth/registration",
+      userData
+    );
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 422) {
+        const fields = JSON.parse(error.response?.data.message);
+        const errorMessage = fields
+          .map((field: { message: string }) => field.message)
+          .join("\n");
+        throw new Error(errorMessage);
+      }
+      throw new Error(
+        error.response?.data.message || "Registration failed. Please try again."
+      );
+    }
+  }
+}
+
+export async function login(credentials: { email: string; password: string }) {
+  try {
+    const { data }: { data: { message: string; user: IUser } } = await api.post(
+      "/auth/login",
+      credentials
+    );
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      toast.error(
+        error.response?.data.message || "Login failed. Please try again."
+      );
+    }
+  }
+}
+
+export async function verify(email: string, code: string) {
+  try {
+    const { data }: { data: { message: string; user: IUser } } = await api.post(
+      "/auth/verification",
+      { email, code }
+    );
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(
+        error.response?.data.message || "Verification failed. Please try again."
+      );
+    }
+  }
+}
+
+export async function logout() {
+  try {
+    const response = await api.post("/auth/logout");
+    if (response.status === 200) {
+      // Clear the cookie or token here if necessary
+      console.log("Logout successful");
+      return true;
+    }
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+  return false;
+}
