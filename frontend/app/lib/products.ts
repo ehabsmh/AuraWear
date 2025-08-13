@@ -15,3 +15,13 @@ export async function fetchProducts(queryParams = {}) {
     throw error;
   }
 }
+
+export async function fetchNewArrivals() {
+  try {
+    const { data }: { data: IProduct[] } = await api.get("/products/latest");
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

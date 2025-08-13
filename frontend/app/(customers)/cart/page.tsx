@@ -1,12 +1,16 @@
-// import { getCurrentUser } from "@/app/_lib/currentUser";
-
 import CartItems from "@/app/components/customers/cart/CartItems";
-import { getCart } from "@/app/lib/cart";
+import Order from "@/app/components/customers/orders/Order";
+import { getCart } from "@/app/lib/cart.server";
 
 export default async function CartPage() {
-  // const user = await getCurrentUser();
+  const data = await getCart();
 
-  const cart = await getCart();
-
-  return <CartItems cart={cart} />;
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+        <CartItems cart={data?.cart} />
+        <Order />
+      </div>
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { IProduct } from "@/interfaces/Product";
+import { IProduct } from "@/app/interfaces/Product";
 
 function Variants({
   variants,

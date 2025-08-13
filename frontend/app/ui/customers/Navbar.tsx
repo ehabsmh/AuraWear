@@ -25,6 +25,7 @@ const Navbar = () => {
       <div className="flex items-center gap-6">
         <Link href="/" className="text-xl font-bold text-black mr-10">
           <Image
+            priority
             src="/logo-no_bg.png"
             alt="AuraWear Logo"
             width={100}

@@ -12,6 +12,7 @@ export interface IVariant {
 }
 
 export interface IProduct {
+  _id: string;
   name: string;
   slug: string;
   shortDescription?: string;

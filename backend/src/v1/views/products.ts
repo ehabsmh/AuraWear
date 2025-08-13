@@ -24,9 +24,6 @@ productsRouter.put(
 );
 productsRouter.delete("/:id", auth, isAdmin, ProductsController.delete);
 productsRouter.get("/", ProductsController.all);
-// productsRouter.get("/:slug", ProductsController.bySlug);
-// productsRouter.get("/:sex", ProductsController.bySex);
-
-// Public routes
+productsRouter.get("/latest", ProductsController.latest);
 
 export default productsRouter;

@@ -1,33 +1,82 @@
 "use client";
 
-import { IProduct } from "@/interfaces/Product";
 import Image from "next/image";
 import Variants from "./Variants";
-import { BiMinus, BiPlus } from "react-icons/bi";
-import { HeartPlus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/app/context/AuthContext";
+import { useEffect, useReducer, useState } from "react";
+import { IProduct } from "@/app/interfaces/Product";
+import AddToCart from "../cart/AddToCart";
+import { ICartItem, ICartResponse } from "@/app/interfaces/Cart";
 
-function ProductDetails({ product }: { product: IProduct }) {
-  const { user } = useAuth();
-  const [variantIndex, setVariantIndex] = useState(0);
-  const [sizeIndex, setSizeIndex] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(
-    product.variants[variantIndex].images[0]
+interface IInitialState {
+  variantIndex: number;
+  sizeIndex: number;
+  selectedImage: string | null;
+}
+
+const initialState: IInitialState = {
+  variantIndex: 0,
+  sizeIndex: 0,
+  selectedImage: null,
+};
+
+function reducer(
+  state: IInitialState,
+  action: { type: string; payload: any; product?: IProduct }
+) {
+  switch (action.type) {
+    case "SET_VARIANT_INDEX":
+      return {
+        ...state,
+        variantIndex: action.payload,
+        selectedImage:
+          action.product?.variants[action.payload].images[0] ?? null,
+      };
+    case "SET_SIZE_INDEX":
+      return { ...state, sizeIndex: action.payload };
+    case "SET_SELECTED_IMAGE":
+      return { ...state, selectedImage: action.payload };
+    default:
+      return state;
+  }
+}
+
+function ProductDetails({
+  product,
+  cart,
+}: {
+  product: IProduct;
+  cart?: ICartResponse;
+}) {
+  const [{ variantIndex, sizeIndex, selectedImage }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
+
+  const [cartItems, setCartItems] = useState<ICartItem[]>(
+    cart?.cart.items || []
+  );
+
+  const cartItemExists = cartItems?.find(
+    (item) =>
+      item.productId._id === product._id &&
+      item.variantIndex === variantIndex &&
+      item.sizeIndex === sizeIndex
   );
 
   function handleVariantChange(index: number) {
-    setVariantIndex(index);
+    dispatch({ type: "SET_VARIANT_INDEX", payload: index, product });
   }
 
   function handleSizeChange(index: number) {
-    setSizeIndex(index);
+    dispatch({ type: "SET_SIZE_INDEX", payload: index });
   }
 
   useEffect(() => {
-    setSelectedImage(product.variants[variantIndex].images[0]);
-    setSizeIndex(0);
-  }, [product.variants, variantIndex]);
+    dispatch({
+      type: "SET_SELECTED_IMAGE",
+      payload: product.variants[variantIndex].images[0],
+    });
+  }, []);
 
   return (
     <>
@@ -43,7 +92,9 @@ function ProductDetails({ product }: { product: IProduct }) {
         <div className="flex gap-0.5 mt-4">
           {product.variants[variantIndex].images.map((image, index) => (
             <Image
-              onClick={() => setSelectedImage(image)}
+              onClick={() =>
+                dispatch({ type: "SET_SELECTED_IMAGE", payload: image })
+              }
               loading="lazy"
               key={index}
               src={image}
@@ -84,57 +135,11 @@ function ProductDetails({ product }: { product: IProduct }) {
           onSizeChange={handleSizeChange}
         />
 
-        <div className="w-full flex items-center gap-4 mt-5">
-          <form className=" mt-5">
-            <label
-              htmlFor="quantity-input"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Choose quantity:
-            </label>
-            <div className="flex w-full gap-3">
-              <div className="w-36 relative flex items-center">
-                <button
-                  type="button"
-                  id="decrement-button"
-                  className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
-                >
-                  <BiMinus className="text-gray-700" />
-                </button>
-                <input
-                  type="text"
-                  id="quantity-input"
-                  className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="1"
-                  required
-                />
-                <button
-                  type="button"
-                  id="increment-button"
-                  className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
-                >
-                  <BiPlus className="text-gray-700" />
-                </button>
-              </div>
-              <div className="flex gap-4">
-                <button
-                  onClick={() =>
-                    user
-                      ? alert("Added to cart")
-                      : alert("Please login to add to cart")
-                  }
-                  className="bg-secondary-light text-white px-4 py-2 rounded hover:bg-secondary transition duration-150"
-                >
-                  Add to Cart
-                </button>
-                <div className="flex items-center bg-gray-300 text-black gap-2 px-4 py-2 rounded hover:bg-gray-500 transition duration-150">
-                  <HeartPlus className="text-red-500" />
-                  <button>Wishlist</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+        <AddToCart
+          cartItemPayload={{ productId: product._id, variantIndex, sizeIndex }}
+          isCartItem={cartItemExists}
+          setCartItems={setCartItems}
+        />
       </div>
     </>
   );

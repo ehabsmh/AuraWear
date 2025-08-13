@@ -1,11 +1,17 @@
+import { IProduct } from "./Product";
+
 export interface ICartItem {
   _id: string;
   cartId: string;
-  productId: string;
+  productId: IProduct;
+  productSlug: string;
+  productName: string;
   variantIndex: number;
   sizeIndex: number;
+  productVariantImage: string;
   quantity: number;
   price: number;
+  pricePerQuantity: number;
   __v: number;
 }
 

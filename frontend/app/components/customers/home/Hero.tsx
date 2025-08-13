@@ -1,12 +1,26 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const images = ["/men-fashion.jpg", "/8.jpg"];
+const images = [
+  {
+    href: "/shop?sex=male",
+    src: "/men-fashion.jpg",
+  },
+  {
+    href: "/shop?sex=female",
+    src: "/8.jpg",
+  },
+];
 
 function Hero() {
   return (
     <section id="hero" className="grid grid-cols-2 mb-32">
-      {images.map((src, index) => (
-        <div key={index} className="relative group overflow-hidden">
+      {images.map(({ href, src }, index) => (
+        <Link
+          key={index}
+          href={href}
+          className="relative group overflow-hidden"
+        >
           <Image
             src={src}
             alt={`Slide ${index + 1}`}
@@ -18,7 +32,7 @@ function Hero() {
           <div className="absolute duration-300 group-hover:scale-150 group-hover:opacity-100 opacity-0 bg-gray-700/60 top-0 bottom-0 left-0 right-0 flex items-center justify-center text-white text-2xl font-bold cursor-pointer">
             <p>{index === 0 ? "Men" : "Women"}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </section>
   );

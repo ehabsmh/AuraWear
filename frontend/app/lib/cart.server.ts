@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "../config/axios.config";
-import { ICartResponse } from "../interfaces/Cart";
+import { ICartItem, ICartResponse } from "../interfaces/Cart";
 
 export async function getCart() {
   try {

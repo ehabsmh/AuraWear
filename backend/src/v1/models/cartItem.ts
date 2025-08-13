@@ -6,10 +6,14 @@ import { recalculateCartTotal } from "../utils/cart";
 export interface ICartItem extends Document {
   cartId: Types.ObjectId;
   productId: Types.ObjectId;
+  productSlug: string;
+  productName: string;
   variantIndex: number;
   sizeIndex: number;
+  productVariantImage: string;
   quantity: number;
   price: number;
+  pricePerQuantity: number;
 }
 
 export const CartItemSchema = new Schema<ICartItem>({
@@ -23,8 +27,10 @@ export const CartItemSchema = new Schema<ICartItem>({
   },
   variantIndex: { type: Number },
   sizeIndex: { type: Number },
+  productVariantImage: String,
   quantity: { type: Number },
   price: { type: Number, default: 0 },
+  pricePerQuantity: { type: Number, default: 0 },
 });
 
 // Prevent duplicate product-variant-size in the same cart
@@ -55,9 +61,14 @@ CartItemSchema.pre("save", async function (next) {
   if (item.quantity > size.stock)
     throw new AppError("Not enough stock", ErrorName.ValidationError);
 
-  item.price = product.discountPrice
-    ? product.discountPrice * item.quantity
-    : product.price * item.quantity;
+  // Add price to cart item
+  item.price = product.discountPrice ? product.discountPrice : product.price;
+
+  // Add price per quantity to cart item
+  item.pricePerQuantity = item.price * item.quantity;
+
+  // Set product variant image
+  item.productVariantImage = variant.images[0];
 
   next();
 });

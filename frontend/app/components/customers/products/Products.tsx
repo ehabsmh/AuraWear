@@ -1,15 +1,5 @@
+import { IProduct } from "@/app/interfaces/Product";
 import ProductCard from "./ProductCard";
-import { IProduct } from "@/interfaces/Product";
-
-// const products = Array.from({ length: 72 }).map((_, i) => ({
-//   name: `Product ${i + 1}`,
-//   price: 89 + i,
-//   oldPrice: i % 3 === 0 ? 99 + i : undefined,
-//   discount: i % 3 === 0 ? 10 + (i % 5) : undefined,
-//   reviews: Math.floor(Math.random() * 5) + 1,
-//   image: "/men-fashion.jpg",
-//   label: i === 1 ? "TRENDING" : undefined,
-// }));
 
 interface ProductsProps {
   products: IProduct[];

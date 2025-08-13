@@ -1,3 +1,4 @@
+import { fetchNewArrivals } from "@/app/lib/products";
 import {
   Carousel,
   CarouselContent,
@@ -10,7 +11,9 @@ import React from "react";
 
 const imgs = ["/1.webp", "/2.webp", "/3.webp", "/1.webp", "/2.webp", "/3.webp"];
 
-function Arrivals() {
+async function Arrivals() {
+  const newArrivals = await fetchNewArrivals();
+  console.log(newArrivals);
   return (
     <section className="bg-white mb-20">
       <Carousel className="w-full p-20" opts={{ align: "start", loop: true }}>
@@ -21,23 +24,23 @@ function Arrivals() {
           Showing our latest arrival on this summer
         </p>
         <CarouselContent className="gap-3">
-          {imgs.map((img, index) => (
+          {newArrivals.map((product, index) => (
             <CarouselItem
               className="md:basis-1/3 basis-1/2 lg:basis-1/4 cursor-pointer"
               key={index}
             >
-              <div className="p-1 flex flex-col items-center justify-center">
+              <div className=" p-1 flex flex-col items-center justify-center">
                 <Image
-                  src={img}
-                  alt="x"
+                  src={product.mainImage}
+                  alt={product.name}
                   width={300}
                   height={300}
-                  className="w-full object-cover mb-2 rounded-md"
+                  className="w-[300px] h-[300px] object-contain rounded-md mb-2"
                   quality={100}
                 />
                 <div className="self-start">
-                  <h3>Black Clean T-Shirt</h3>
-                  <p>$14</p>
+                  <h3>{product.name}</h3>
+                  <p>${product.price}</p>
                 </div>
               </div>
             </CarouselItem>

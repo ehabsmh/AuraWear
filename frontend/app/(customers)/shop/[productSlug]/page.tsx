@@ -1,5 +1,6 @@
 import ProductDetails from "@/app/components/customers/products/ProductDetails";
 import { IProduct } from "@/app/interfaces/Product";
+import { getCart } from "@/app/lib/cart.server";
 import { fetchProducts } from "@/app/lib/products";
 
 async function Page({
@@ -10,13 +11,13 @@ async function Page({
 }) {
   const { productSlug } = await params;
   const product = (await fetchProducts({ slug: productSlug })) as IProduct;
-  console.log(product);
+  const cart = await getCart();
 
   return (
     <section className="mt-7">
       <div className="container w-3/4 mx-auto">
         <div className="grid grid-cols-2 gap-24 items-center">
-          <ProductDetails product={product} />
+          <ProductDetails product={product} cart={cart} />
         </div>
       </div>
     </section>

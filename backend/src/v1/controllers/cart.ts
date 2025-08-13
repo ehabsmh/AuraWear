@@ -6,7 +6,6 @@ import {
 import AppError, { ErrorName } from "../service/error";
 import CartItem from "../models/cartItem";
 import Cart from "../models/cart";
-import { MongooseError } from "mongoose";
 
 class CartController {
   static async addToCart(req: Request, res: Response, next: NextFunction) {
@@ -21,9 +20,12 @@ class CartController {
       }
 
       // validate the cart item data
-      const { error } = createCartItemValidationSchema.validate(req.body, {
-        abortEarly: false,
-      });
+      const { error } = createCartItemValidationSchema.validate(
+        { productId, variantIndex, sizeIndex, quantity },
+        {
+          abortEarly: false,
+        }
+      );
       if (error) {
         throw new AppError(
           JSON.stringify(error.details),
@@ -38,6 +40,8 @@ class CartController {
         sizeIndex,
         quantity,
       });
+
+      await cartItem.populate({ path: "productId" });
 
       // return success response
       res.status(201).json({
@@ -96,12 +100,20 @@ class CartController {
       }
 
       // find the cart item and update it
-      const cartItem = await CartItem.findById(cartItemId);
+      const cartItem = await CartItem.findById(cartItemId).populate({
+        path: "productId",
+      });
       if (!cartItem) {
         throw new AppError("Cart item not found", ErrorName.NotFoundError);
       }
       if (quantity) {
         cartItem.quantity = quantity;
+        // const product = await Product.findById(cartItem.productId);
+        // if (!product) {
+        //   throw new AppError("Product not found", ErrorName.NotFoundError);
+        // }
+
+        // cartItem.pricePerQuantity = cartItem.quantity * product.price;
       }
 
       if (variantIndex) {
@@ -141,10 +153,13 @@ class CartController {
   static async getCart(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.userr?._id;
-      console.log(userId);
 
       // find the cart for the user
-      const cart = await Cart.findOne({ userId }).populate("items");
+      const cart = await Cart.findOne({ userId }).populate({
+        path: "items",
+        populate: { path: "productId" },
+      });
+
       if (!cart) {
         throw new AppError("Cart not found", ErrorName.NotFoundError);
       }
@@ -155,7 +170,6 @@ class CartController {
         cart,
       });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

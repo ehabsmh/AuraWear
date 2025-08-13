@@ -146,6 +146,16 @@ class ProductsController {
     }
   }
 
+  static async latest(req: Request, res: Response, next: NextFunction) {
+    try {
+      const products = await Product.find({}).sort({ createdAt: -1 }).limit(10);
+
+      res.json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async outOfStock(req: Request, res: Response, next: NextFunction) {
     try {
       const page = Number(req.query.page) || 1;

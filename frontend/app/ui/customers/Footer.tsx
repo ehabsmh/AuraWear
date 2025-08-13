@@ -7,15 +7,15 @@ const Footer = () => {
     <footer className="bg-black text-white px-6 md:px-20 py-16 mt-16">
       <div className="grid md:grid-cols-4 gap-10">
         {/* Brand Info */}
-        <div>
+        <div className="flex flex-col items-center justify-center">
           <Image
             src="/logo-no_bg.png"
             alt="AuraWear Logo"
             width={150}
-            height={50}
+            height={150}
             className="mb-4"
           />
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm text-center">
             AuraWear is your go-to destination for trendsetting fashion that
             blends comfort and elegance.
           </p>
