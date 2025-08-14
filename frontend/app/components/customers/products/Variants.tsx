@@ -32,7 +32,7 @@ function Variants({
           >
             <p
               className="w-6 h-6 rounded-full cursor-pointer"
-              style={{ backgroundColor: variant.color }}
+              style={{ backgroundColor: variant.colorCode }}
             ></p>
           </div>
         ))}

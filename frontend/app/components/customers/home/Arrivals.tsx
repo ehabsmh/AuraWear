@@ -7,9 +7,8 @@ import {
   CarouselPrevious,
 } from "@/app/ui/general/carousel";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-
-const imgs = ["/1.webp", "/2.webp", "/3.webp", "/1.webp", "/2.webp", "/3.webp"];
 
 async function Arrivals() {
   const newArrivals = await fetchNewArrivals();
@@ -29,7 +28,10 @@ async function Arrivals() {
               className="md:basis-1/3 basis-1/2 lg:basis-1/4 cursor-pointer"
               key={index}
             >
-              <div className=" p-1 flex flex-col items-center justify-center">
+              <Link
+                href={`/shop/${product.slug}`}
+                className="p-1 flex flex-col items-center justify-center"
+              >
                 <Image
                   src={product.mainImage}
                   alt={product.name}
@@ -42,7 +44,7 @@ async function Arrivals() {
                   <h3>{product.name}</h3>
                   <p>${product.price}</p>
                 </div>
-              </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>

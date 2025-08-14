@@ -6,6 +6,7 @@ export interface ISize {
 
 export interface IVariant {
   color: string;
+  colorCode: string;
   sizes: ISize[];
   images: string[];
   mainImage: string;

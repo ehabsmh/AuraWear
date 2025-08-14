@@ -34,5 +34,5 @@ export async function addImagesToProduct(
     }
   });
 
-  await Promise.all(uploadPromises); // ⏱️ Upload all in parallel
+  await Promise.all(uploadPromises);
 }

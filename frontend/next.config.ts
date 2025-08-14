@@ -9,6 +9,21 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**", // Accept all paths
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "eg.jumia.is",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowSVG: true,
   },
