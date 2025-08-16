@@ -5,7 +5,7 @@ import { PaymentMethod } from "./PaymentMethod";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/AuthContext";
 import { IOrderPayload } from "@/app/interfaces/Order";
-import { createOrder } from "@/app/lib/orders";
+import { createOrder } from "@/app/lib/orders.client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

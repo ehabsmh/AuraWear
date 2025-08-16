@@ -9,7 +9,7 @@ export default async function CartPage() {
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
         <CartItems cart={data?.cart} />
-        <Order />
+        {data?.cart.numItems && data.cart.numItems > 0 && <Order />}
       </div>
     </div>
   );

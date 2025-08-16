@@ -120,6 +120,7 @@ class OrdersController {
 
       // Clear cart
       cart.totalPrice = 0;
+      cart.numItems = 0;
       await cart.save();
 
       if (!userHasShippingInfo) {
@@ -152,6 +153,22 @@ class OrdersController {
       res.status(201).json({
         message: "Order created successfully!",
         order: newOrder,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getOrders(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.userr?._id;
+      if (!userId)
+        throw new AppError("User not found", ErrorName.NotFoundError);
+
+      const orders = await Order.find({ userId });
+      res.status(200).json({
+        message: "Orders retrieved successfully!",
+        orders,
       });
     } catch (error) {
       next(error);
