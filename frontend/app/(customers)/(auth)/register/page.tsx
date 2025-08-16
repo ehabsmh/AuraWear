@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signup } from "@/app/lib/users";
-import { Button } from "@/app/ui/general/button";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterPage() {
   const [avatar, setAvatar] = useState<string | null>(null);

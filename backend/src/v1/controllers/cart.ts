@@ -108,12 +108,6 @@ class CartController {
       }
       if (quantity) {
         cartItem.quantity = quantity;
-        // const product = await Product.findById(cartItem.productId);
-        // if (!product) {
-        //   throw new AppError("Product not found", ErrorName.NotFoundError);
-        // }
-
-        // cartItem.pricePerQuantity = cartItem.quantity * product.price;
       }
 
       if (variantIndex) {
@@ -154,6 +148,13 @@ class CartController {
     try {
       const userId = req.userr?._id;
 
+      console.log(userId);
+      if (!userId) {
+        res.status(200).json({
+          message: "Cart retrieved successfully",
+          cart: null,
+        });
+      }
       // find the cart for the user
       const cart = await Cart.findOne({ userId }).populate({
         path: "items",

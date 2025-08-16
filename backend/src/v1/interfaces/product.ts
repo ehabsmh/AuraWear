@@ -15,6 +15,7 @@ export interface IVariant {
 }
 
 export interface IProduct {
+  _id: Schema.Types.ObjectId;
   name: string;
   slug: string;
   shortDescription?: string;

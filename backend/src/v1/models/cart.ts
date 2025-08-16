@@ -6,9 +6,10 @@ export interface ICart extends Document {
   totalPrice: number;
   createdAt: Date;
   updatedAt: Date;
+  items: Types.Array<Types.ObjectId>;
 }
 
-const CartSchema = new Schema<ICart>(
+const CartSchema = new Schema<ICart, {}, {}, {}, ICart["items"]>(
   {
     userId: {
       type: Schema.Types.ObjectId,

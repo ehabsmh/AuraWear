@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/app/context/AuthContext";
 import { login } from "@/app/lib/users";
-import { Button } from "@/app/ui/general/button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 

@@ -2,12 +2,11 @@ import { Document, model, Schema, Types } from "mongoose";
 import Product from "./product";
 import AppError, { ErrorName } from "../service/error";
 import { recalculateCartTotal } from "../utils/cart";
+import { IProduct } from "../interfaces/product";
 
 export interface ICartItem extends Document {
   cartId: Types.ObjectId;
-  productId: Types.ObjectId;
-  productSlug: string;
-  productName: string;
+  productId: IProduct;
   variantIndex: number;
   sizeIndex: number;
   productVariantImage: string;

@@ -5,6 +5,7 @@ import { ICartItem } from "@/app/interfaces/Cart";
 import { addToCart } from "@/app/lib/cart.client";
 import { handleDeleteCartItem } from "@/app/lib/utils";
 import { HeartPlus, Minus, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ function AddToCart({
 }) {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
+  const router = useRouter();
 
   const handleIncrement = () => {
     setQuantity((prev) => prev + 1);
@@ -42,6 +44,8 @@ function AddToCart({
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
       }
+    } else {
+      router.push("/login");
     }
   };
 

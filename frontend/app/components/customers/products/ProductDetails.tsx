@@ -45,7 +45,7 @@ function ProductDetails({
   cart,
 }: {
   product: IProduct;
-  cart?: ICartResponse;
+  cart?: ICartResponse | null;
 }) {
   const [{ variantIndex, sizeIndex, selectedImage }, dispatch] = useReducer(
     reducer,

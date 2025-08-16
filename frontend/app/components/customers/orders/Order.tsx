@@ -1,63 +1,81 @@
 "use client";
 
-import { Button } from "@/app/ui/general/button";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { PaymentMethod } from "./PaymentMethod";
+import { useForm } from "react-hook-form";
+import { useAuth } from "@/app/context/AuthContext";
+import { IOrderPayload } from "@/app/interfaces/Order";
+import { createOrder } from "@/app/lib/orders";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 function Order() {
-  const [address, setAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [phone, setPhone] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [city, setCity] = useState("");
+  const { user, setUser } = useAuth();
+  const router = useRouter();
 
-  const userHasAddress = false; // simulate condition
+  const { register, setValue, handleSubmit } = useForm<IOrderPayload>();
+
+  const userHasAddress = [
+    user?.address,
+    user?.postalCode,
+    user?.phone,
+    user?.city,
+  ].every((shippingInfo) => Boolean(shippingInfo)); // check if all fields are filled
+
+  async function onSubmit(data: IOrderPayload) {
+    try {
+      const result = await createOrder(data);
+      console.log(result);
+
+      if (result.updatedUser) {
+        setUser(result.updatedUser);
+      }
+
+      toast.success(result.message);
+      router.replace("/"); // later: change redirection to /orders
+      // router.replace("/orders");
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
+  }
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
       <h2 className="text-2xl font-bold mb-4">Order Info</h2>
 
-      {!userHasAddress ? (
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Address"
-            className="input w-full"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Postal Code"
-            className="input w-full"
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Phone"
-            className="input w-full"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <input
-            type="date"
-            placeholder="Birthdate"
-            className="input w-full"
-            value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="City"
-            className="input w-full"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-          <Button className="w-full">Save Address</Button>
-        </form>
-      ) : (
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-5">
+        {!userHasAddress && (
+          <>
+            <input
+              type="text"
+              placeholder="Address"
+              className="input w-full"
+              {...register("shippingInfo.address", { required: true })}
+            />
+            <input
+              type="text"
+              placeholder="Postal Code"
+              className="input w-full"
+              {...register("shippingInfo.postalCode", { required: true })}
+            />
+            <input
+              type="text"
+              placeholder="Phone"
+              className="input w-full"
+              {...register("shippingInfo.phone", { required: true })}
+            />
+            <input
+              type="text"
+              placeholder="City"
+              className="input w-full"
+              {...register("shippingInfo.city", { required: true })}
+            />
+          </>
+        )}
+        <PaymentMethod setValue={setValue} />
+
         <Button className="w-full">Order Now</Button>
-      )}
+      </form>
     </div>
   );
 }

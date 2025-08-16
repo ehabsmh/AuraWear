@@ -1,12 +1,12 @@
 "use client";
 import { useAuth } from "@/app/context/AuthContext";
 import { verify } from "@/app/lib/users";
-import { Button } from "@/app/ui/general/button";
+import { Button } from "@/components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/app/ui/general/input-otp";
+} from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";

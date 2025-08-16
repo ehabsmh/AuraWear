@@ -13,6 +13,8 @@ import { logout } from "@/app/lib/users";
 const Navbar = () => {
   const { user, setUser, loading } = useAuth();
 
+  console.log(user);
+
   const pathname = usePathname();
   const isLoggedIn = Boolean(user); // Replace with real auth check
 
@@ -84,7 +86,7 @@ const Navbar = () => {
 
           {/* Dropdown */}
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-40 z-50">
+            <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md min-w-40 max-w-60 z-50">
               {!isLoggedIn ? (
                 <>
                   <Link
@@ -102,6 +104,9 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                  <p className="block px-4 py-2 font-bold">
+                    {user?.firstName} {user?.lastName}
+                  </p>
                   <Link
                     href="/settings"
                     className="block px-4 py-2 hover:bg-gray-100"

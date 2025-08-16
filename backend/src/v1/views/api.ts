@@ -6,6 +6,7 @@ import { auth } from "../middlewares/auth";
 import productsRouter from "./products";
 import cartRouter from "./cart";
 import dealsRouter from "./deals";
+import ordersRouter from "./orders";
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.use("/subcategories", subcategoriesRouter);
 router.use("/products", productsRouter);
 router.use("/deals", dealsRouter);
 router.use("/cart", auth, cartRouter);
+router.use("/orders", auth, ordersRouter);
 
 export default router;
