@@ -283,7 +283,58 @@ class UsersController {
     }
   }
 
-  static async me(req: Request, res: Response, next: NextFunction) {}
+  static async updateShipping(req: Request, res: Response, next: NextFunction) {
+    /* This method updates the user's shipping information. */
+    const { address, city, postalCode, phone } = req.body;
+
+    try {
+      // Validate user input
+      if (!address || !city || !postalCode || !phone) {
+        throw new AppError("All fields are required.", RequireError);
+      }
+
+      // Get the user from the request object
+      const user = req.userr;
+      if (!user) {
+        throw new AppError("User not found.", NotFoundError);
+      }
+
+      // Update the user's shipping information
+      user.address = address;
+      user.city = city;
+      user.postalCode = postalCode;
+      user.phone = phone;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        user._id,
+        { address, city, postalCode, phone },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        throw new AppError("User not found.", NotFoundError);
+      }
+
+      if (!SECRET_KEY) throw new Error("Secret key is not defined.");
+
+      const token = jwt.sign(updatedUser, SECRET_KEY);
+
+      res.cookie("Authorization", token, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "lax",
+        secure: false,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      res.json({
+        message: "Shipping information updated successfully.",
+        updatedUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UsersController;

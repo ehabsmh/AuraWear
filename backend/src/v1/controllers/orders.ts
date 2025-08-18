@@ -174,6 +174,55 @@ class OrdersController {
       next(error);
     }
   }
+
+  static async removeItem(req: Request, res: Response, next: NextFunction) {
+    const { itemId, orderId } = req.params;
+    try {
+      if (!orderId || !itemId)
+        throw new AppError(
+          "Order ID and Order Item ID are required",
+          ErrorName.ValidationError
+        );
+
+      const order = await Order.findById(orderId);
+      if (!order)
+        throw new AppError("Order not found", ErrorName.NotFoundError);
+
+      if (order.orderStatus !== "Pending" && order.orderStatus !== "Processing")
+        throw new AppError(
+          `Order has already been processed (${order.orderStatus}).`,
+          ErrorName.ValidationError
+        );
+
+      const orderItems = order.products;
+
+      // If only one product in an order, the whole order gets removed
+      if (orderItems.length === 1) {
+        await order.deleteOne();
+        res.json({
+          message: "Order deleted successfully!",
+        });
+      }
+
+      await Order.updateOne(
+        { _id: orderId },
+        { $pull: { products: { _id: itemId } } }
+      );
+
+      order.total = order.products.reduce(
+        (total, item) => total + item.price! * item.quantity!,
+        0
+      );
+
+      await order.save();
+      res.status(200).json({
+        message: "Product removed from order successfully!",
+        order,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default OrdersController;

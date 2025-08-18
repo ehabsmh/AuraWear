@@ -1,10 +1,64 @@
-import { IOrder } from "@/app/interfaces/Order";
+import { IOrder, IOrderItem } from "@/app/interfaces/Order";
+import { removeOrderItem } from "@/app/lib/orders.client";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Delete } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-function OrderCard({ order }: { order: IOrder }) {
+function OrderCard({
+  order,
+  setOrders,
+}: {
+  order: IOrder;
+  setOrders: React.Dispatch<React.SetStateAction<IOrder[]>>;
+}) {
+  const router = useRouter();
+  async function handleDeleteItem(
+    orderId: string,
+    orderItemId: string,
+    product: IOrderItem
+  ) {
+    try {
+      toast.error("Are you sure you want to remove this item?", {
+        id: "delete-confirm",
+        cancel: {
+          label: "No",
+          onClick: () => {
+            toast.dismiss("delete-confirm");
+          },
+        },
+        action: {
+          label: "Yes",
+          onClick: async () => {
+            const { message } = await removeOrderItem(orderId, orderItemId);
+            setOrders((prevOrders) =>
+              prevOrders.map((prevOrder) => {
+                return prevOrder._id === orderId
+                  ? {
+                      ...prevOrder,
+                      products: prevOrder.products.filter((p) => {
+                        return p._id !== product._id;
+                      }),
+                      total: prevOrder.total - product.pricePerQuantity,
+                    }
+                  : prevOrder;
+              })
+            );
+
+            toast.dismiss("delete-confirm");
+            toast.success(message, { richColors: true });
+          },
+        },
+        duration: Infinity,
+      });
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
+  }
+
   return (
     <Card className="h-full flex flex-col rounded-2xl shadow-md hover:shadow-xl transition">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -36,31 +90,46 @@ function OrderCard({ order }: { order: IOrder }) {
         {/* Items */}
         <div>
           <h3 className="font-medium mb-2">Items</h3>
-          <ul className="space-y-1 text-sm text-muted-foreground">
+          <ul className="space-y-7 text-sm text-muted-foreground">
             {order.products.map((product, i) => (
-              <li key={i} className="flex justify-between">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  width={35}
-                  height={35}
-                  quality={100}
-                  className="w-[35px] h-[35px] rounded-md"
-                />
-                <div className="flex gap-2">
-                  <span>{product.name}</span>
+              <li key={i} className="flex justify-between items-center">
+                {order.orderStatus === "Pending" ||
+                order.orderStatus === "Processing" ? (
+                  <Delete
+                    onClick={() =>
+                      handleDeleteItem(order._id, product._id, product)
+                    }
+                    className="hover:text-red-500 duration-100 cursor-pointer"
+                  />
+                ) : null}
+                <div className="w-full ml-2 flex items-center justify-between gap-2 hover:bg-gray-100 duration-150 p-2 cursor-pointer rounded-md">
+                  <div className="flex gap-2">
+                    <Image
+                      src={product.image ? product.image : "/men-fashion.jpg"}
+                      alt={product.name}
+                      width={35}
+                      height={35}
+                      quality={100}
+                      className="w-[35px] h-[35px] rounded-md"
+                    />
+                    <span>
+                      {product.name.length >= 25
+                        ? `${product.name.slice(0, 25)}...`
+                        : product.name}
+                    </span>
 
-                  <span className="text-muted-foreground">
-                    ({product.color})
-                  </span>
+                    <span className="text-muted-foreground">
+                      ({product.color})
+                    </span>
 
-                  <span className="text-muted-foreground">
-                    ({product.size})
-                  </span>
+                    <span className="text-muted-foreground">
+                      ({product.size})
+                    </span>
 
-                  <span>×{product.quantity}</span>
+                    <span>×{product.quantity}</span>
+                  </div>
+                  <span>${product.pricePerQuantity}</span>
                 </div>
-                <span>${product.pricePerQuantity}</span>
               </li>
             ))}
           </ul>

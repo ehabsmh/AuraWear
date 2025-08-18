@@ -29,5 +29,6 @@ usersRouter.get(
 );
 
 // User management routes
+usersRouter.put("/shipping", UsersController.updateShipping);
 
 export default usersRouter;

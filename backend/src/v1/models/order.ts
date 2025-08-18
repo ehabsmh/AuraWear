@@ -1,19 +1,16 @@
 import { Schema, model, Types } from "mongoose";
 
 // ----------- Subdocument: Ordered Product Snapshot -----------
-const OrderedProductSchema = new Schema(
-  {
-    productId: { type: Types.ObjectId, ref: "Product" },
-    name: String,
-    price: Number,
-    pricePerQuantity: Number,
-    quantity: Number,
-    size: String,
-    color: String,
-    image: String,
-  },
-  { _id: false }
-);
+const OrderedProductSchema = new Schema({
+  productId: { type: Types.ObjectId, ref: "Product" },
+  name: String,
+  price: Number,
+  pricePerQuantity: Number,
+  quantity: Number,
+  size: String,
+  color: String,
+  image: String,
+});
 
 // ----------- Subdocument: Shipping Address Info -----------
 const shippingAddressInfoSchema = new Schema(

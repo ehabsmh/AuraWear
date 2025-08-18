@@ -8,22 +8,25 @@ export interface IOrderPayload {
   };
 }
 
+export interface IOrderItem {
+  _id: string;
+  productId: string;
+  name: string;
+  price: number;
+  pricePerQuantity: number;
+  quantity: number;
+  size: string;
+  color: string;
+  image: string;
+}
+
 export interface IOrder {
   _id: string;
   userId: string;
 
   cartId: string;
 
-  products: {
-    productId: string;
-    name: string;
-    price: number;
-    pricePerQuantity: number;
-    quantity: number;
-    size: string;
-    color: string;
-    image: string;
-  }[];
+  products: IOrderItem[];
 
   shippingInfo: {
     address: string;
