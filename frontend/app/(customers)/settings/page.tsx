@@ -2,13 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/app/context/AuthContext";
 import Shipping from "@/app/components/customers/settings/Shipping";
+import Account from "@/app/components/customers/settings/Account";
 
 export default function SettingsPage() {
   const { user } = useAuth();
@@ -29,25 +28,7 @@ export default function SettingsPage() {
             <TabsTrigger value="security">Security</TabsTrigger>
           </TabsList>
 
-          {/* Account */}
-          <TabsContent value="account">
-            <Card className="rounded-2xl shadow-md">
-              <CardHeader>
-                <CardTitle>Account Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="John Doe" />
-                </div>
-                <div>
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" placeholder="••••••••" />
-                </div>
-                <Button>Save Changes</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
+          <Account user={user} />
 
           <Shipping />
 

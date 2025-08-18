@@ -1,6 +1,7 @@
 import express from "express";
 import UsersController from "../controllers/users";
 import passport from "passport";
+import { auth } from "../middlewares/auth";
 
 const usersRouter = express.Router();
 
@@ -29,6 +30,6 @@ usersRouter.get(
 );
 
 // User management routes
-usersRouter.put("/shipping", UsersController.updateShipping);
+usersRouter.put("/shipping", auth, UsersController.updateShipping);
 
 export default usersRouter;

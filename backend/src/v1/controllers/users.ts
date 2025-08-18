@@ -311,13 +311,15 @@ class UsersController {
         { new: true }
       );
 
+      console.log(updatedUser);
+
       if (!updatedUser) {
         throw new AppError("User not found.", NotFoundError);
       }
 
       if (!SECRET_KEY) throw new Error("Secret key is not defined.");
 
-      const token = jwt.sign(updatedUser, SECRET_KEY);
+      const token = jwt.sign(updatedUser.toJSON(), SECRET_KEY);
 
       res.cookie("Authorization", token, {
         httpOnly: true,

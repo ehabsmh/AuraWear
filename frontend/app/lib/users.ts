@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { IUser } from "../interfaces/User";
+import { IShippingInfo, IUser } from "../interfaces/User";
 import api from "../config/axios.config";
 
 export async function signup(userData: {
@@ -11,16 +11,6 @@ export async function signup(userData: {
   avatar?: FileList | null;
 }) {
   try {
-    // const formData = new FormData();
-    // console.log("userData", userData);
-    // formData.append("firstName", userData.firstName);
-    // formData.append("lastName", userData.lastName);
-    // formData.append("email", userData.email);
-    // formData.append("password", userData.password);
-    // if (userData.avatar) {
-    //   formData.append("avatar", userData.avatar[0]);
-    // }
-
     const { data }: { data: { message: string; user: IUser } } = await api.post(
       "/auth/registration",
       userData
@@ -88,4 +78,20 @@ export async function logout() {
     console.error("Logout failed:", error);
   }
   return false;
+}
+
+export async function updateShippingInfo(payload: IShippingInfo) {
+  try {
+    console.log(payload);
+    const { data }: { data: { message: string; updatedUser: IUser } } =
+      await api.put("/auth/shipping", payload);
+
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
+
+    throw new Error("Failed to update shipping information");
+  }
 }

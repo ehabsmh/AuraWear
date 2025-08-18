@@ -6,14 +6,27 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/context/AuthContext";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { updateShippingInfo } from "@/app/lib/users";
+import { toast } from "sonner";
+import { IShippingInfo } from "@/app/interfaces/User";
 
 function Shipping() {
-  const { user } = useAuth();
-  const { register, handleSubmit, setValue } = useForm();
+  const { user, setUser } = useAuth();
+  const { register, handleSubmit, setValue } = useForm<IShippingInfo>();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  async function onSubmit(data: IShippingInfo) {
+    try {
+      const result = await updateShippingInfo(data);
+      if (result) {
+        setUser(result.updatedUser);
+        toast.success(result.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  }
 
   useEffect(() => {
     setValue("address", user?.address);

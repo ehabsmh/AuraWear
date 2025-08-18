@@ -210,7 +210,7 @@ class OrdersController {
       );
 
       order.total = order.products.reduce(
-        (total, item) => total + item.price! * item.quantity!,
+        (total, item) => total + item.pricePerQuantity!,
         0
       );
 

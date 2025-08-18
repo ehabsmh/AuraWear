@@ -14,3 +14,10 @@ export interface IUser {
   verificationCodeExpires?: number;
   googleId?: string;
 }
+
+export interface IShippingInfo {
+  address?: string;
+  city?: string;
+  postalCode?: string;
+  phone?: string;
+}
