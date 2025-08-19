@@ -10,7 +10,7 @@ import Shipping from "@/app/components/customers/settings/Shipping";
 import Account from "@/app/components/customers/settings/Account";
 
 export default function SettingsPage() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -28,7 +28,7 @@ export default function SettingsPage() {
             <TabsTrigger value="security">Security</TabsTrigger>
           </TabsList>
 
-          <Account user={user} />
+          <Account user={user} setUser={setUser} />
 
           <Shipping />
 

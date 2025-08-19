@@ -9,6 +9,7 @@ const usersRouter = express.Router();
 usersRouter.post("/registration", UsersController.register);
 usersRouter.post("/verification", UsersController.verify);
 usersRouter.post("/code-resend", UsersController.resendCode);
+usersRouter.patch("/change-password", auth, UsersController.changePassword);
 usersRouter.post("/login", UsersController.login);
 usersRouter.post("/logout", UsersController.logout);
 
@@ -31,5 +32,6 @@ usersRouter.get(
 
 // User management routes
 usersRouter.put("/shipping", auth, UsersController.updateShipping);
+usersRouter.patch("/change-name", auth, UsersController.updateName);
 
 export default usersRouter;

@@ -95,3 +95,42 @@ export async function updateShippingInfo(payload: IShippingInfo) {
     throw new Error("Failed to update shipping information");
   }
 }
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+  confirmPassword: string
+) {
+  try {
+    const { data }: { data: { message: string; updatedUser: IUser } } =
+      await api.patch("/auth/change-password", {
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      });
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
+
+    throw new Error("Failed to change password");
+  }
+}
+
+export async function updateName(firstName: string, lastName: string) {
+  try {
+    const { data }: { data: { message: string; updatedUser: IUser } } =
+      await api.patch("/auth/change-name", {
+        firstName,
+        lastName,
+      });
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
+
+    throw new Error("Failed to update name");
+  }
+}

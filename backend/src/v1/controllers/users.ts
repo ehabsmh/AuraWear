@@ -311,8 +311,6 @@ class UsersController {
         { new: true }
       );
 
-      console.log(updatedUser);
-
       if (!updatedUser) {
         throw new AppError("User not found.", NotFoundError);
       }
@@ -331,6 +329,109 @@ class UsersController {
 
       res.json({
         message: "Shipping information updated successfully.",
+        updatedUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async changePassword(req: Request, res: Response, next: NextFunction) {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    try {
+      // Validate user input
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        throw new AppError("All fields are required.", RequireError);
+      }
+
+      // Get the user ID from the request object
+      const userId = req.userr?._id;
+
+      // Get the user from the DB
+      const user = await User.findById(userId);
+      if (!user) throw new AppError("User not found.", NotFoundError);
+
+      // Check if the old password is correct
+      const isMatch = await user.comparePassword(currentPassword);
+
+      if (!isMatch)
+        throw new AppError("Incorrect password.", AuthorizationError);
+
+      if (newPassword === currentPassword) {
+        throw new AppError(
+          "New password must be different from current password.",
+          ValidationError
+        );
+      }
+
+      if (newPassword !== confirmPassword) {
+        throw new AppError("Passwords do not match.", ValidationError);
+      }
+
+      // Update the user's password
+      user.password = await bcrypt.hash(newPassword, 10);
+      await user.save();
+
+      if (!SECRET_KEY) throw new Error("Secret key is not defined.");
+
+      const token = jwt.sign(user.toJSON(), SECRET_KEY);
+
+      res.cookie("Authorization", token, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "lax",
+        secure: false,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      res.json({
+        message: "Password changed successfully.",
+        updatedUser: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateName(req: Request, res: Response, next: NextFunction) {
+    const { firstName, lastName } = req.body;
+
+    try {
+      // Validate user input
+      if (!firstName || !lastName) {
+        throw new AppError("All fields are required.", RequireError);
+      }
+
+      // Get the user from the request object
+      const userId = req.userr?._id;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { firstName, lastName },
+        { new: true }
+      );
+
+      console.log("Updated user:", updatedUser);
+
+      if (!updatedUser) {
+        throw new AppError("User not found.", NotFoundError);
+      }
+
+      if (!SECRET_KEY) throw new Error("Secret key is not defined.");
+
+      const token = jwt.sign(updatedUser.toJSON(), SECRET_KEY);
+
+      res.cookie("Authorization", token, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "lax",
+        secure: false,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      res.json({
+        message: "Name updated successfully.",
         updatedUser,
       });
     } catch (error) {
