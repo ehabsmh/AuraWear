@@ -1,16 +1,8 @@
-export interface IOrderPayload {
-  paymentMethod: "Cash" | "Card";
-  shippingInfo?: {
-    address: string;
-    city: string;
-    postalCode: string;
-    phone: string;
-  };
-}
+import { Schema } from "mongoose";
 
 export interface IOrderItem {
-  _id: string;
-  productId: string;
+  _id: Schema.Types.ObjectId;
+  productId: Schema.Types.ObjectId;
   name: string;
   price: number;
   pricePerQuantity: number;
@@ -21,10 +13,9 @@ export interface IOrderItem {
 }
 
 export interface IOrder {
-  _id: string;
-  userId: string;
-
-  cartId: string;
+  _id: Schema.Types.ObjectId;
+  userId: Schema.Types.ObjectId;
+  cartId: Schema.Types.ObjectId;
 
   products: IOrderItem[];
 
@@ -45,4 +36,5 @@ export interface IOrder {
   shippedAt: Date;
   deliveredAt: Date;
   createdAt: string;
+  paymobOrderId: number;
 }

@@ -5,7 +5,7 @@ import { PaymentMethod } from "./PaymentMethod";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/AuthContext";
 import { IOrderPayload } from "@/app/interfaces/Order";
-import { createOrder } from "@/app/lib/orders.client";
+import { createOrder, createPaymobIntention } from "@/app/lib/orders.client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,8 @@ function Order() {
   const { user, setUser } = useAuth();
   const router = useRouter();
 
-  const { register, setValue, handleSubmit } = useForm<IOrderPayload>();
+  const { register, setValue, getValues, handleSubmit } =
+    useForm<IOrderPayload>();
 
   const userHasAddress = [
     user?.address,
@@ -24,16 +25,20 @@ function Order() {
 
   async function onSubmit(data: IOrderPayload) {
     try {
-      const result = await createOrder(data);
-      console.log(result);
+      console.log(data);
 
-      if (result.updatedUser) {
-        setUser(result.updatedUser);
+      if (getValues().paymentMethod === "Card") {
+        const paymentResult = await createPaymobIntention(data);
+        if (paymentResult) {
+          window.location.href = paymentResult.checkoutUrl;
+        }
+      } else {
+        const result = await createOrder(data);
+        if (result.updatedUser) {
+          setUser(result.updatedUser);
+          toast.success(result.message);
+        }
       }
-
-      toast.success(result.message);
-      router.replace("/"); // later: change redirection to /orders
-      // router.replace("/orders");
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
     }

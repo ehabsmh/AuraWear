@@ -14,7 +14,7 @@ export default function CartItems({ cart }: { cart?: ICartResponse["cart"] }) {
   );
 
   return (
-    <div className="md:col-span-2 space-y-6">
+    <div className="md:col-span-2 space-y-6 h-[80vh] overflow-y-auto">
       <h2 className="text-3xl font-bold">Shopping Cart</h2>
       <p className="text-gray-600">Total Items: {totalItems}</p>
 

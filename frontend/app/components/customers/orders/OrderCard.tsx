@@ -34,6 +34,12 @@ function OrderCard({
           label: "Yes",
           onClick: async () => {
             const { message } = await removeOrderItem(orderId, orderItemId);
+            if (order.products.length === 1) {
+              setOrders((prevOrders) =>
+                prevOrders.filter((o) => o._id !== orderId)
+              );
+            }
+
             setOrders((prevOrders) =>
               prevOrders.map((prevOrder) => {
                 return prevOrder._id === orderId

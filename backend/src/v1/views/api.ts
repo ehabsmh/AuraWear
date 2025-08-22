@@ -16,6 +16,6 @@ router.use("/subcategories", subcategoriesRouter);
 router.use("/products", productsRouter);
 router.use("/deals", dealsRouter);
 router.use("/cart", auth, cartRouter);
-router.use("/orders", auth, ordersRouter);
+router.use("/orders", ordersRouter);
 
 export default router;

@@ -1,4 +1,5 @@
 import { Schema, model, Types } from "mongoose";
+import { IOrder } from "../interfaces/Order";
 
 // ----------- Subdocument: Ordered Product Snapshot -----------
 const OrderedProductSchema = new Schema({
@@ -24,7 +25,7 @@ const shippingAddressInfoSchema = new Schema(
 );
 
 // ----------- Main Order Schema -----------
-const OrderSchema = new Schema(
+const OrderSchema = new Schema<IOrder>(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
 
@@ -55,6 +56,8 @@ const OrderSchema = new Schema(
 
     shippedAt: Date,
     deliveredAt: Date,
+
+    paymobOrderId: Number,
   },
   { timestamps: true }
 );
