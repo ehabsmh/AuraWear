@@ -1,8 +1,10 @@
+import { IProduct } from "./Product";
+
 export default interface IDeal {
   _id: string;
   title: string;
   description: string;
-  products: string[];
+  products: IProduct[];
   discountPercentage: number;
   startDate: Date;
   endDate: Date;

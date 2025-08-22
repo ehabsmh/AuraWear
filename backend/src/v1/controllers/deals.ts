@@ -97,7 +97,7 @@ class DealsController {
         throw new AppError("Deal not found", ErrorName.NotFoundError);
       }
 
-      res.status(200).json(deal);
+      res.json(deal);
     } catch (error) {
       next(error);
     }

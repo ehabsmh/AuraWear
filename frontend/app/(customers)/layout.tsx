@@ -9,7 +9,7 @@ export default async function ShopLayout({
   return (
     <div className="relative flex flex-col h-screen">
       <Navbar />
-      {children}
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

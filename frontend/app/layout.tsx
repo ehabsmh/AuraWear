@@ -25,7 +25,7 @@ export default function RootLayout({
         className={`bg-main ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Toaster richColors={true} />
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider> {children}</AuthProvider>
       </body>
     </html>
   );

@@ -13,3 +13,15 @@ export async function fetchDeals() {
     throw new Error("An error occurred while fetching deals");
   }
 }
+
+export async function fetchDeal(slug: string) {
+  try {
+    const { data }: { data: IDeal } = await api.get(`/deals/${slug}`);
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError)
+      throw new Error(error.response?.data.message);
+
+    throw new Error("An error occurred while fetching the deal");
+  }
+}
