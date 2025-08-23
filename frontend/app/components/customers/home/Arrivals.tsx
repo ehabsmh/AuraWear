@@ -12,10 +12,13 @@ import React from "react";
 
 async function Arrivals() {
   const newArrivals = await fetchNewArrivals();
-  console.log(newArrivals);
+
   return (
     <section className="bg-white mb-20">
-      <Carousel className="w-full p-20" opts={{ align: "start", loop: true }}>
+      <Carousel
+        className="w-full p-8 md:p-20"
+        opts={{ align: "start", loop: true }}
+      >
         <h2 className="text-gray-800 font-semibold text-4xl mb-3 leading-none">
           Latest Arrival
         </h2>

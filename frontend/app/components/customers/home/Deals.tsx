@@ -13,7 +13,7 @@ async function Deals() {
 
       <div
         className="
-          grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[450px]
+          grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px]
         "
       >
         {deals.map((deal, index) => (
