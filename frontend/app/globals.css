@@ -40,6 +40,7 @@ body {
   --color-secondary: #ff6424;
   --color-secondary-light: #ff8958;
   --color-inactive: #c7c7c7;
+  --color-dark: #121212;
 }
 
 @theme inline {
@@ -79,6 +80,7 @@ body {
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-nav: var(--nav);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -101,8 +103,9 @@ body {
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.9777 0.0021 17.19);
   --foreground: oklch(0.145 0 0);
+  --nav: oklch(1 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -132,11 +135,15 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --scrollbar-track: #e7e7e7;
+  --scrollbar-thumb: #ff6424;
+  --scrollbar-thumb-hover: #ff6424;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.1591 0 0);
   --foreground: oklch(0.985 0 0);
+  --nav: oklch(0.2178 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -166,6 +173,9 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --scrollbar-track: #1a1f2b;
+  --scrollbar-thumb: #ff6424;
+  --scrollbar-thumb-hover: #ff6424;
 }
 
 @layer base {
@@ -180,4 +190,29 @@ body {
 
 .input {
   @apply w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-secondary-light;
+}
+
+
+/* Webkit browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }

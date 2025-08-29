@@ -108,7 +108,7 @@ function OrderCard({
                     className="hover:text-red-500 duration-100 cursor-pointer"
                   />
                 ) : null}
-                <div className="w-full ml-2 flex items-center justify-between gap-2 hover:bg-gray-100 duration-150 p-2 cursor-pointer rounded-md">
+                <div className="w-full ml-2 flex items-center justify-between gap-2 dark:hover:bg-nav hover:bg-gray-100 duration-150 p-3 cursor-pointer rounded-md">
                   <div className="flex gap-2">
                     <Image
                       src={product.image ? product.image : "/men-fashion.jpg"}

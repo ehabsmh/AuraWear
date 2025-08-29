@@ -9,7 +9,10 @@ export default async function OrdersPage() {
         fallback={
           <div className="grid gap-6 md:grid-cols-2">
             {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="h-[434px] w-[740px] bg-white p-5">
+              <div
+                key={index}
+                className="h-[434px] w-[740px] dark:bg-background bg-white p-5"
+              >
                 <Skeleton className="h-[11px] w-[350px] mb-3" />
                 <Skeleton className="h-[19px] w-[200px] mb-3" />
                 <Skeleton className="h-[50px] w-[500px] mb-3" />

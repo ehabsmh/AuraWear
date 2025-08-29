@@ -22,7 +22,7 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
       )} */}
 
-      <div className="w-full aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
+      <div className="w-full aspect-auto md:aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
         <Link href={`/shop/${product.slug}`}>
           <Image
             src={product.mainImage || "/men-fashion.jpg"}
@@ -42,9 +42,7 @@ function ProductCard({ product }: ProductCardProps) {
           </span>
         </div> */}
 
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">
-          {product.name}
-        </h3>
+        <h3 className="text-sm font-semibold line-clamp-2">{product.name}</h3>
 
         <div className="text-sm">
           <span

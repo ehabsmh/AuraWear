@@ -319,8 +319,6 @@ class OrdersController {
 
   static async orderWithCard(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body);
-
       if (!req.body.obj.order.id) {
         throw new AppError("Order ID is required", ErrorName.ValidationError);
       }
@@ -336,7 +334,8 @@ class OrdersController {
         order.paymentStatus = "Failed";
         order.orderStatus = "Cancelled";
         await order?.save();
-        return res.status(400).json({ message: "Payment failed" });
+        res.status(400).json({ message: "Payment failed" });
+        return;
       }
 
       const cart = await Cart.findById(order.cartId);

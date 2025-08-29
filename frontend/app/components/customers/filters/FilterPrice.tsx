@@ -27,7 +27,7 @@ function FilterPrice({ onUpdateFilters, currentParams }: FilterProps) {
       <h2 className="font-semibold mt-3">Filter by price</h2>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-700">
+        <p className="text-sm">
           Price: ${priceRange[0]} - ${priceRange[1]}
         </p>
         <button

@@ -67,7 +67,7 @@ function AddToCart({
               disabled={quantity <= 1}
               className="cursor-pointer bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
             >
-              <Minus className="text-gray-700" />
+              <Minus className="dark:text-gray-300 text-gray-700" />
             </button>
             <input
               type="text"
@@ -84,7 +84,7 @@ function AddToCart({
               onClick={handleIncrement}
               className="cursor-pointer bg-gray-100 dark:bg-gray-700 dark:hover:bg-secondary dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
             >
-              <Plus className="text-gray-700" />
+              <Plus className="dark:text-gray-300 text-gray-700" />
             </button>
           </div>
           <div className="flex gap-4">

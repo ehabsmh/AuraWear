@@ -47,7 +47,7 @@ function Variants({
               className={`w-8 h-8 border rounded-full flex items-center justify-center cursor-pointer  transition duration-150 ${
                 sizeIndex === index
                   ? "bg-secondary-light text-white"
-                  : "bg-transparent hover:bg-gray-200"
+                  : "bg-transparent hover:bg-gray-200 dark:hover:text-black"
               }`}
             >
               {size.size}

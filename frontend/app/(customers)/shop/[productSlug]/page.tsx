@@ -15,8 +15,8 @@ async function Page({
 
   return (
     <section className="mt-7">
-      <div className="container w-3/4 mx-auto">
-        <div className="grid grid-cols-2 gap-24 items-center">
+      <div className="container w-11/12 md:w-3/4 mx-auto">
+        <div className="md:grid md:grid-cols-2 md:gap-24 md:items-center">
           <ProductDetails product={product} cart={cart} />
         </div>
       </div>

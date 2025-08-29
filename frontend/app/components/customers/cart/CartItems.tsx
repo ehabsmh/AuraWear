@@ -3,6 +3,7 @@
 import { ICartItem, ICartResponse } from "@/app/interfaces/Cart";
 import CartItem from "./CartItem";
 import { useState } from "react";
+import Order from "../orders/Order";
 
 export default function CartItems({ cart }: { cart?: ICartResponse["cart"] }) {
   const [items, setItems] = useState<ICartItem[]>(cart?.items || []);
@@ -14,17 +15,20 @@ export default function CartItems({ cart }: { cart?: ICartResponse["cart"] }) {
   );
 
   return (
-    <div className="md:col-span-2 space-y-6 h-[80vh] overflow-y-auto">
-      <h2 className="text-3xl font-bold">Shopping Cart</h2>
-      <p className="text-gray-600">Total Items: {totalItems}</p>
+    <>
+      <div className="md:col-span-2 space-y-6 h-[80vh] overflow-y-auto p-3">
+        <h2 className="text-3xl font-bold">Shopping Cart</h2>
+        <p className="dark:text-gray-300 text-gray-600">
+          Total Items: {totalItems}
+        </p>
 
-      {items.map((item, index) => (
-        <CartItem key={index} item={item} setItems={setItems} />
-      ))}
-
-      <div className="text-right font-bold text-2xl">
-        Total: ${totalPrice?.toFixed(2)}
+        {items.map((item, index) => (
+          <CartItem key={index} item={item} setItems={setItems} />
+        ))}
       </div>
-    </div>
+      {typeof cart?.numItems === "number" && cart.numItems > 0 && (
+        <Order totalPrice={totalPrice} />
+      )}
+    </>
   );
 }

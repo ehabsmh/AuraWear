@@ -3,7 +3,6 @@
 import { ICartItem } from "@/app/interfaces/Cart";
 import { updateCartItem } from "@/app/lib/cart.client";
 import { Minus, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CartItemQuantity({
@@ -54,7 +53,7 @@ export default function CartItemQuantity({
         onClick={decrementQuantity}
         className="cursor-pointer p-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
       >
-        <Minus size={16} />
+        <Minus size={16} className="dark:text-black" />
       </button>
       <span>{qty}</span>
       <button
@@ -62,7 +61,7 @@ export default function CartItemQuantity({
         onClick={incrementQuantity}
         className="cursor-pointer p-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
       >
-        <Plus size={16} />
+        <Plus size={16} className="dark:text-black" />
       </button>
     </div>
   );

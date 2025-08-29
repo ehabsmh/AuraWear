@@ -31,21 +31,9 @@ const CategorySchema = new Schema<ICategory>(
   { timestamps: true }
 );
 
-// CategorySchema.post
-
-CategorySchema.pre(
-  "deleteOne",
-  { document: true, query: false },
-  async function (next: NextFunction) {
-    try {
-      await Subcategory.deleteMany({ categoryId: this._id });
-      next();
-    } catch (e) {
-      next(e);
-    }
-  }
-);
-
+CategorySchema.pre("deleteOne", { document: true }, async function () {
+  await Subcategory.deleteMany({ categoryId: this._id });
+});
 const Category = model("Category", CategorySchema);
 
 export default Category;

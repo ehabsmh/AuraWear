@@ -28,7 +28,7 @@ function LoginWithCred() {
     <>
       <div className="relative text-center text-gray-500">
         <hr className="border-gray-200" />
-        <span className="absolute left-1/2 top-[-0.6rem] bg-white px-2 text-sm transform -translate-x-1/2">
+        <span className="dark:text-white absolute left-1/2 top-[-0.6rem] dark:bg-nav bg-white rounded-md px-2 text-sm transform -translate-x-1/2">
           or login with credentials
         </span>
       </div>
@@ -49,7 +49,7 @@ function LoginWithCred() {
           name="password"
         />
 
-        <Button className="w-full">Login</Button>
+        <Button className="w-full cursor-pointer">Login</Button>
       </form>
     </>
   );

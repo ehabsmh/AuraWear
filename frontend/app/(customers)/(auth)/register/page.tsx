@@ -1,4 +1,3 @@
-// app/(shop)/auth/register/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -43,7 +42,7 @@ export default function RegisterPage() {
       const result = await signup(data);
       if (result) {
         toast.success(result.message);
-        // Redirect or perform additional actions here
+
         router.replace(`/verify?email=${data.email}`);
       }
     } catch (error) {
@@ -53,9 +52,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
-      <div className="w-full max-w-lg bg-white shadow-xl rounded-2xl p-8 space-y-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800">
+    <main className="min-h-screen flex items-center justify-center p-4">
+      <div className="w-full max-w-lg dark:bg-nav bg-white shadow-xl rounded-2xl p-8 space-y-6">
+        <h2 className="text-3xl font-bold text-center dark:text-gray-300 text-gray-800">
           Create an Account
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -91,7 +90,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex flex-col items-center mt-6 gap-2 w-full">
-            <label className="text-sm font-medium text-gray-700">
+            <label className="text-sm font-medium dark:text-gray-300 text-gray-700">
               Upload Avatar
             </label>
 
@@ -127,7 +126,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full cursor-pointer">
             Sign Up
           </Button>
         </form>

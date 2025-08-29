@@ -7,9 +7,7 @@ async function Deals() {
 
   return (
     <section className="mb-16">
-      <h2 className="text-gray-800 font-semibold text-4xl mb-6 leading-none">
-        Aura Deals
-      </h2>
+      <h2 className="font-semibold text-4xl mb-6 leading-none">Aura Deals</h2>
 
       <div
         className="
@@ -20,7 +18,6 @@ async function Deals() {
           <Deal
             key={deal._id}
             deal={deal}
-            // Pass custom layout props based on index
             className={
               (index + 1) % 2 === 0
                 ? "md:col-span-2 md:row-span-3"

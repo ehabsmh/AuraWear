@@ -9,7 +9,7 @@ import { createOrder, createPaymobIntention } from "@/app/lib/orders.client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-function Order() {
+function Order({ totalPrice }: { totalPrice: number }) {
   const { user, setUser } = useAuth();
   const router = useRouter();
 
@@ -45,8 +45,12 @@ function Order() {
   }
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md">
+    <div className="dark:bg-nav bg-white p-6 rounded-xl shadow-md">
       <h2 className="text-2xl font-bold mb-4">Order Info</h2>
+      <p className="font-bold text-lg">
+        <span className="dark:text-gray-400 text-gray-700">Total: </span>
+        {totalPrice ? `${totalPrice.toFixed(2)} EGP` : "N/A"}
+      </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-5">
         {!userHasAddress && (
@@ -79,7 +83,9 @@ function Order() {
         )}
         <PaymentMethod setValue={setValue} />
 
-        <Button className="w-full">Order Now</Button>
+        <Button className="dark:bg-gray-300 w-full cursor-pointer">
+          Order Now
+        </Button>
       </form>
     </div>
   );

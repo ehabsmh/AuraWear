@@ -80,15 +80,16 @@ function ProductDetails({
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <div className="relative w-[600px] h-[600px]">
+      <div className="flex flex-col md:items-center">
+        <div className="relative w-full aspect-square md:w-[350px] md:h-[350px] 2xl:w-[600px] 2xl:h-[600px]">
           <Image
             src={selectedImage}
             alt={product.name}
             fill
-            className="object-contain rounded-lg"
+            className="object-cover rounded-lg"
           />
         </div>
+
         <div className="flex gap-0.5 mt-4">
           {product.variants[variantIndex].images.map((image, index) => (
             <Image
@@ -99,8 +100,8 @@ function ProductDetails({
               key={index}
               src={image}
               alt={product.name}
-              width={50}
-              height={50}
+              width={128}
+              height={96}
               quality={100}
               className={`w-32 h-24 object-contain rounded-lg mt-4 cursor-pointer hover:scale-105 transition duration-150 ${
                 selectedImage === image ? "border-2 border-secondary-light" : ""
@@ -114,18 +115,22 @@ function ProductDetails({
         <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
         {product.discountPrice ? (
           <div className="flex gap-4">
-            <p className="text-lg text-gray-500 line-through mb-2">
+            <p className="text-lg dark:text-red-400 text-gray-500 line-through mb-2">
               ${product.price}
             </p>
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-lg dark:text-gray-300 text-gray-700 mb-4">
               ${product.discountPrice}
             </p>
           </div>
         ) : (
-          <p className="text-lg text-gray-700 mb-2">${product.price}</p>
+          <p className="text-lg dark:text-gray-300 text-gray-700 mb-2">
+            ${product.price}
+          </p>
         )}
 
-        <p className="text-sm text-gray-500 mb-6">{product.shortDescription}</p>
+        <p className="text-sm dark:text-gray-300 text-gray-500 mb-6">
+          {product.shortDescription}
+        </p>
 
         <Variants
           variants={product.variants}

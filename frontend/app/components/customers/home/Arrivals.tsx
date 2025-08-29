@@ -1,4 +1,5 @@
 import { fetchNewArrivals } from "@/app/lib/products";
+import AnimatedArrivalSection from "@/app/ui/customers/AnimatedArrivalSection";
 import {
   Carousel,
   CarouselContent,
@@ -14,12 +15,12 @@ async function Arrivals() {
   const newArrivals = await fetchNewArrivals();
 
   return (
-    <section className="bg-white mb-20">
+    <AnimatedArrivalSection>
       <Carousel
-        className="w-full p-8 md:p-20"
+        className="w-full px-10 md:p-20"
         opts={{ align: "start", loop: true }}
       >
-        <h2 className="text-gray-800 font-semibold text-4xl mb-3 leading-none">
+        <h2 className="font-semibold text-4xl mb-3 leading-none">
           Latest Arrival
         </h2>
         <p className="text-gray-500 text-lg mb-5">
@@ -40,7 +41,7 @@ async function Arrivals() {
                   alt={product.name}
                   width={300}
                   height={300}
-                  className="w-[300px] h-[300px] object-contain rounded-md mb-2"
+                  className="w-[180px] h-[180px] max-w-[180px] max-h-[180px] md:w-[300px] md:h-[300px] md:max-w-[300px] md:max-h-[300px] object-contain rounded-md mb-2"
                   quality={100}
                 />
                 <div className="self-start">
@@ -51,10 +52,10 @@ async function Arrivals() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-0 w-16 h-16 text-secondary" />
-        <CarouselNext className="absolute right-0 w-16 h-16 text-secondary" />
+        <CarouselPrevious className="absolute left-0 w-10 h-10 md:w-16 md:h-16 text-secondary" />
+        <CarouselNext className="absolute right-0 w-10 h-10 md:w-16 md:h-16 text-secondary" />
       </Carousel>
-    </section>
+    </AnimatedArrivalSection>
   );
 }
 

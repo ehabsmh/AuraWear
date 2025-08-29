@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <div className="container w-4/5 mx-auto">
+      <div className="container w-[90%] mx-auto overflow-x-hidden">
         <Support />
         <Arrivals />
         <Deals />

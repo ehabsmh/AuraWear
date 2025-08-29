@@ -6,9 +6,9 @@ import LoginWithCred from "@/app/components/auth/LoginWithCred";
 
 function LoginPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800">
+    <main className="h-[calc(100vh-96px)] flex items-center justify-center p-4">
+      <div className="w-full max-w-md dark:bg-nav bg-white shadow-xl rounded-2xl p-8 space-y-6">
+        <h2 className="text-3xl font-bold text-center dark:text-gray-300 text-gray-800">
           Login to your account
         </h2>
 

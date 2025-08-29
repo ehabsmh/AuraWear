@@ -35,11 +35,11 @@ async function Page({ searchParams }: PageProps) {
   };
 
   return (
-    <section>
-      <div className="container w-4/5 mx-auto">
-        <div className="grid grid-cols-[400px_1fr] gap-4">
+    <section className="mt-3 md:mt-0">
+      <div className="container w-11/12 md:w-4/5 mx-auto">
+        <div className="flex flex-col items-center md:items-start md:grid md:grid-cols-[250px_1fr] 2xl:grid-cols-[400px_1fr] gap-4 mt-10">
           <Filters />
-          <section>
+          <section className="md:px-6 w-full">
             <Subcategories sex={sex} category={category} />
             <Products
               products={products}

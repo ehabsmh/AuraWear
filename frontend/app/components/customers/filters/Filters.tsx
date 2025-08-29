@@ -29,7 +29,7 @@ function Filters() {
   }
 
   return (
-    <div id="filters" className="bg-white/30 p-4 rounded shadow">
+    <div id="filters" className="bg-nav p-4 rounded shadow-md w-full">
       <Categories
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
