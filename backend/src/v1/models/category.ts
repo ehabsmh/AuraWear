@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { NextFunction } from "express";
 import slugify from "slugify";
 import Subcategory from "./subcategory";
 
@@ -20,8 +19,8 @@ const CategorySchema = new Schema<ICategory>(
       default() {
         return slugify(this.name, {
           lower: true,
-          strict: true, // Remove special characters
-          locale: "en", // Use English locale for slug generation
+          strict: true,
+          locale: "en",
         });
       },
     },

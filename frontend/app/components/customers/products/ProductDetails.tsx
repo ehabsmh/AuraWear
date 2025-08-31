@@ -6,6 +6,8 @@ import { useEffect, useReducer, useState } from "react";
 import { IProduct } from "@/app/interfaces/Product";
 import AddToCart from "../cart/AddToCart";
 import { ICartItem, ICartResponse } from "@/app/interfaces/Cart";
+import { HeartPlus } from "lucide-react";
+import AddToWishlist from "../wishlist/AddToWishlist";
 
 interface IInitialState {
   variantIndex: number;
@@ -140,11 +142,19 @@ function ProductDetails({
           onSizeChange={handleSizeChange}
         />
 
-        <AddToCart
-          cartItemPayload={{ productId: product._id, variantIndex, sizeIndex }}
-          isCartItem={cartItemExists}
-          setCartItems={setCartItems}
-        />
+        <div className="flex gap-3 items-end">
+          <AddToCart
+            cartItemPayload={{
+              productId: product._id,
+              variantIndex,
+              sizeIndex,
+            }}
+            isCartItem={cartItemExists}
+            setCartItems={setCartItems}
+          />
+
+          <AddToWishlist productId={product._id} />
+        </div>
       </div>
     </>
   );

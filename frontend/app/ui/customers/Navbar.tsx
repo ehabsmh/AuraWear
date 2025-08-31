@@ -115,7 +115,15 @@ export default function Navbar() {
               {isLoggedIn ? (
                 <>
                   <DropdownMenuItem asChild>
+                    <span className="font-semibold">
+                      {user.firstName} {user.lastName}
+                    </span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/orders">Orders</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/wishlist">Wishlist</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/settings">Settings</Link>

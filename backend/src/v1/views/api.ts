@@ -7,6 +7,7 @@ import productsRouter from "./products";
 import cartRouter from "./cart";
 import dealsRouter from "./deals";
 import ordersRouter from "./orders";
+import wishlistRouter from "./WishlistItems";
 
 const router = express.Router();
 
@@ -17,5 +18,6 @@ router.use("/products", productsRouter);
 router.use("/deals", dealsRouter);
 router.use("/cart", auth, cartRouter);
 router.use("/orders", ordersRouter);
+router.use("/wishlist", auth, wishlistRouter);
 
 export default router;
