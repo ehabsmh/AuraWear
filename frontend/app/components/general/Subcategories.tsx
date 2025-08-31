@@ -13,7 +13,6 @@ function Subcategories({ sex, category }: SubcategoryProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  console.log(category);
 
   const [subcategories, setSubcategories] = React.useState<ISubcategory[]>([]);
   const [currentSubcategory, setCurrentSubcategory] = React.useState<
@@ -22,6 +21,7 @@ function Subcategories({ sex, category }: SubcategoryProps) {
 
   function addFilter(subcategoryId: string | null) {
     const params = new URLSearchParams(searchParams);
+
     if (subcategoryId) {
       params.set("subcategory", subcategoryId);
     } else {
@@ -33,7 +33,12 @@ function Subcategories({ sex, category }: SubcategoryProps) {
 
   useEffect(() => {
     fetchSubcategories({ sex, category }).then(setSubcategories);
+    return () => setCurrentSubcategory(null);
   }, [sex, category]);
+
+  useEffect(() => {
+    addFilter(currentSubcategory);
+  }, [currentSubcategory]);
 
   if (!subcategories.length) {
     return null;
@@ -59,11 +64,11 @@ function Subcategories({ sex, category }: SubcategoryProps) {
         <li
           key={subcategory._id}
           onClick={() => {
-            setCurrentSubcategory((curr) =>
-              curr === subcategory._id ? null : subcategory._id
-            );
-
-            addFilter(subcategory._id);
+            if (currentSubcategory === subcategory._id) {
+              setCurrentSubcategory(null);
+            } else {
+              setCurrentSubcategory(subcategory._id);
+            }
           }}
           className={`flex items-center justify-center text-center rounded-full bg-gray-200 px-3 py-1 w-36 h-36 hover:bg-gray-200 transition cursor-pointer ${
             currentSubcategory === subcategory._id

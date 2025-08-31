@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Pagination from "./Pagination";
 
 interface ProductsProps {
   products: IProduct[];
@@ -61,18 +62,7 @@ async function Products({
       </div>
 
       {/* Pagination */}
-      <div className="mt-10 flex justify-center">
-        <nav className="flex space-x-2">
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <button
-              key={index}
-              className="px-4 py-2 rounded border hover:bg-black hover:text-white transition"
-            >
-              {index + 1}
-            </button>
-          ))}
-        </nav>
-      </div>
+      <Pagination totalPages={totalPages} />
     </>
   );
 }

@@ -12,6 +12,8 @@ interface PageProps {
     size?: string;
     minPrice?: string;
     maxPrice?: string;
+    page?: string;
+    limit?: string;
   };
 }
 

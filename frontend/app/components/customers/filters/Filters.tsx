@@ -2,6 +2,9 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Categories from "./Categories";
 import FilterPrice from "./FilterPrice";
+import FilterColors from "./FilterColors";
+import FilterSizes from "./FilterSizes";
+import FilterStatus from "./FilterStatus";
 
 function Filters() {
   const searchParams = useSearchParams();
@@ -25,6 +28,9 @@ function Filters() {
       }
     }
 
+    // Reset page to 1 on any filter change
+    params.set("page", "1");
+
     router.replace(`${pathname}?${params.toString()}`);
   }
 
@@ -38,7 +44,7 @@ function Filters() {
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
       />
-      {/* <FilterColors
+      <FilterColors
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
       />
@@ -49,7 +55,7 @@ function Filters() {
       <FilterStatus
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
-      /> */}
+      />
     </div>
   );
 }

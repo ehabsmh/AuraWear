@@ -48,6 +48,7 @@ export default function Categories({
     onUpdateFilters({
       sex: newSex,
       category: newCategory,
+      subcategory: null, // Clear subcategory when category changes
     });
   }
 
