@@ -136,7 +136,7 @@ class UsersController {
         maxAge: 7 * 24 * 60 * 60 * 1000, // Set expiration time (e.g., 7 days)
       });
 
-      res.json({ message: "User verified successfully." });
+      res.json({ message: "User verified successfully.", user });
     } catch (error) {
       console.log(error);
       next(error);
@@ -433,6 +433,32 @@ class UsersController {
       res.json({
         message: "Name updated successfully.",
         updatedUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getUserByEmail(req: Request, res: Response, next: NextFunction) {
+    const { email } = req.params;
+
+    console.log(email);
+
+    try {
+      // Validate user input
+      if (!email) {
+        throw new AppError("Email is required.", RequireError);
+      }
+
+      // Get the user from the database
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AppError("User not found.", NotFoundError);
+      }
+
+      res.json({
+        message: "User retrieved successfully.",
+        user,
       });
     } catch (error) {
       next(error);

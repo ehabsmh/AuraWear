@@ -93,7 +93,7 @@ const UserSchema = new Schema<IUser, UserModelType, {}, {}, IUserVirtuals>(
     },
     verificationCodeExpires: {
       type: Number,
-      default: Date.now() + 15 * 60 * 1000, // Default to 15 minutes from now
+      default: Date.now() + 60 * 60 * 1000, // Default to 60 minutes from now
     },
     googleId: {
       type: String,

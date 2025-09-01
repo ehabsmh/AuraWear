@@ -24,6 +24,9 @@ function Subcategories({ sex, category }: SubcategoryProps) {
 
     if (subcategoryId) {
       params.set("subcategory", subcategoryId);
+      if (params.get("page")) {
+        params.delete("page");
+      }
     } else {
       params.delete("subcategory");
     }

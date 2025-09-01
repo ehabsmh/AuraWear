@@ -27,8 +27,8 @@ function Pagination({ totalPages }: { totalPages: number }) {
       <PaginationShadcn>
         <PaginationContent>
           {currentPage > 1 && (
-            <PaginationItem>
-              <PaginationPrevious href={`/shop?page=${currentPage - 1}`} />
+            <PaginationItem onClick={() => goToPage(currentPage - 1)}>
+              <PaginationPrevious href="#" />
             </PaginationItem>
           )}
           {Array.from({ length: totalPages }).map((_, index) => {
@@ -45,8 +45,8 @@ function Pagination({ totalPages }: { totalPages: number }) {
             <PaginationEllipsis />
           </PaginationItem>
           {currentPage < totalPages && (
-            <PaginationItem>
-              <PaginationNext href={`/shop?page=${currentPage + 1}`} />
+            <PaginationItem onClick={() => goToPage(currentPage + 1)}>
+              <PaginationNext href="#" />
             </PaginationItem>
           )}
         </PaginationContent>

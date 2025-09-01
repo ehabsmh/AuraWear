@@ -17,6 +17,7 @@ import { logout } from "@/app/lib/users";
 import ToggleMode from "../general/ToggleMode";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { toast } from "sonner";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -133,6 +134,7 @@ export default function Navbar() {
                       await logout();
                       setUser(null);
                       router.replace("/");
+                      toast.info("Logged out successfully");
                     }}
                     className="text-red-500 cursor-pointer"
                   >

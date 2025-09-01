@@ -134,3 +134,16 @@ export async function updateName(firstName: string, lastName: string) {
     throw new Error("Failed to update name");
   }
 }
+
+export async function fetchUser(email: string) {
+  try {
+    const { data }: { data: { user: IUser } } = await api.get(`/auth/${email}`);
+    return data.user;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
+
+    throw new Error("Failed to fetch user");
+  }
+}

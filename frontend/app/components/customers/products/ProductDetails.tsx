@@ -6,7 +6,6 @@ import { useEffect, useReducer, useState } from "react";
 import { IProduct } from "@/app/interfaces/Product";
 import AddToCart from "../cart/AddToCart";
 import { ICartItem, ICartResponse } from "@/app/interfaces/Cart";
-import { HeartPlus } from "lucide-react";
 import AddToWishlist from "../wishlist/AddToWishlist";
 
 interface IInitialState {

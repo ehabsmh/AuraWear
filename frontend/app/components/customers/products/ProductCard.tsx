@@ -1,6 +1,5 @@
 import { IProduct } from "@/app/interfaces/Product";
 import Image from "next/image";
-// import { Star } from "lucide-react";
 import Link from "next/link";
 
 type ProductCardProps = {

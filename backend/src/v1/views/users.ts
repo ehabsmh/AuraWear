@@ -33,5 +33,6 @@ usersRouter.get(
 // User management routes
 usersRouter.put("/shipping", auth, UsersController.updateShipping);
 usersRouter.patch("/change-name", auth, UsersController.updateName);
+usersRouter.get("/:email", UsersController.getUserByEmail);
 
 export default usersRouter;
