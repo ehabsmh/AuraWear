@@ -1,4 +1,5 @@
 "use client";
+
 import { ISubcategory } from "@/app/interfaces/Subcategory";
 import { fetchSubcategories } from "@/app/lib/subcategories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

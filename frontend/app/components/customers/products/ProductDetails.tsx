@@ -91,7 +91,7 @@ function ProductDetails({
           />
         </div>
 
-        <div className="flex gap-0.5 mt-4">
+        <div className="flex gap-0.5 mt-4 mb-8">
           {product.variants[variantIndex].images.map((image, index) => (
             <Image
               onClick={() =>
@@ -113,7 +113,12 @@ function ProductDetails({
       </div>
 
       <div>
-        <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
+        <h1 className="text-2xl font-bold mb-2">
+          {product.name}{" "}
+          <span className="text-sm font-normal text-gray-500">
+            ({product.variants[variantIndex].sizes[sizeIndex].stock} at stock)
+          </span>
+        </h1>
         {product.discountPrice ? (
           <div className="flex gap-4">
             <p className="text-lg dark:text-red-400 text-gray-500 line-through mb-2">

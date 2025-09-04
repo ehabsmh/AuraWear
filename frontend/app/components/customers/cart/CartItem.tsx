@@ -5,6 +5,7 @@ import Image from "next/image";
 import CartItemQuantity from "./CartItemQuantity";
 import { Delete } from "lucide-react";
 import { handleDeleteCartItem } from "@/app/lib/utils";
+import Link from "next/link";
 
 function CartItem({
   item,
@@ -17,7 +18,10 @@ function CartItem({
   const size = variant?.sizes.at(item.sizeIndex);
 
   return (
-    <div className="relative flex items-center gap-4 dark:bg-nav bg-white p-4 rounded-xl shadow cursor-pointer hover:bg-secondary-light/5 duration-150">
+    <Link
+      href={`/shop/${item.productId.slug}`}
+      className="relative flex items-center gap-4 dark:bg-nav bg-white p-4 rounded-xl shadow cursor-pointer hover:bg-secondary-light/5 duration-150"
+    >
       {size && (
         <>
           {size.stock > 0 ? (
@@ -40,7 +44,7 @@ function CartItem({
         width={96}
         height={96}
         src={item.productVariantImage}
-        alt={`${item.productName}`}
+        alt={`${item.productId.name} - ${variant?.color} - ${size?.size}`}
         className="w-24 h-24 object-cover rounded-lg"
       />
       <div className="flex-1">
@@ -57,7 +61,7 @@ function CartItem({
         />
       </div>
       <div className="text-lg font-semibold">{item.pricePerQuantity} EGP</div>
-    </div>
+    </Link>
   );
 }
 

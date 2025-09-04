@@ -25,8 +25,6 @@ function Order({ totalPrice }: { totalPrice: number }) {
 
   async function onSubmit(data: IOrderPayload) {
     try {
-      console.log(data);
-
       if (getValues().paymentMethod === "Card") {
         const paymentResult = await createPaymobIntention(data);
         if (paymentResult) {
@@ -38,6 +36,7 @@ function Order({ totalPrice }: { totalPrice: number }) {
           setUser(result.updatedUser);
           toast.success(result.message);
         }
+        router.replace("/orders");
       }
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);

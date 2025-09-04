@@ -8,6 +8,7 @@ import Product from "../models/product";
 import jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../..";
 import { createPaymobIntention } from "../utils/order";
+import { mongo } from "mongoose";
 
 class OrdersController {
   static async create(req: Request, res: Response, next: NextFunction) {
@@ -96,11 +97,22 @@ class OrdersController {
 
       // update the sold property in Products
       await Promise.all(
-        products.map((product) =>
-          Product.findByIdAndUpdate(product.productId, {
-            $inc: { sold: product.quantity },
-          })
-        )
+        products.map(async (item) => {
+          const product = await Product.findById(item.productId);
+          if (product) {
+            product.sold += item.quantity;
+            product.variants.forEach((variant) => {
+              if (variant.color === item.color) {
+                variant.sizes.forEach((size) => {
+                  if (size.size === item.size) {
+                    size.stock -= item.quantity;
+                  }
+                });
+              }
+            });
+            return product.save();
+          }
+        })
       );
 
       // Create the order
@@ -144,6 +156,14 @@ class OrdersController {
         order: newOrder,
       });
     } catch (error) {
+      if (error instanceof mongo.MongoServerError && error.code === 11000) {
+        // Handle duplicate key error
+        const field = Object.keys(error.keyPattern)[0];
+        const value = error.keyValue[field];
+        return res.status(409).json({
+          message: `${field}: ${value} already exists`,
+        });
+      }
       next(error);
     }
   }
