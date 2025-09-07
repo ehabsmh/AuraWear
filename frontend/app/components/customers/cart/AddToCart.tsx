@@ -4,7 +4,7 @@ import { useAuth } from "@/app/context/AuthContext";
 import { ICartItem } from "@/app/interfaces/Cart";
 import { addToCart } from "@/app/lib/cart.client";
 import { handleDeleteCartItem } from "@/app/lib/utils";
-import { HeartPlus, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";

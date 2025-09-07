@@ -12,7 +12,7 @@ export async function fetchSubcategories(query: {
     });
 
     return data;
-  } catch (error) {
+  } catch {
     return [];
   }
 }

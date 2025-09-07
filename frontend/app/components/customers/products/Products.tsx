@@ -8,20 +8,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Pagination from "./Pagination";
-
-interface ProductsProps {
-  products: IProduct[];
-  totalPages: number;
-  totalItems: number;
-  limit: number;
-}
+import { fetchProducts } from "@/app/lib/products";
 
 async function Products({
-  products,
-  totalPages,
-  totalItems,
-  limit,
-}: ProductsProps) {
+  params,
+}: {
+  params: { [key: string]: string | undefined };
+}) {
+  const { products, totalPages, totalItems, limit } = (await fetchProducts(
+    params
+  )) as {
+    products: IProduct[];
+    totalPages: number;
+    totalItems: number;
+    limit: number;
+  };
+
   return (
     <>
       {/* Top filter row */}

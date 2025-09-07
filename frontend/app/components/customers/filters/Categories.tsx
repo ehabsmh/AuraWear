@@ -9,7 +9,12 @@ import { fetchCategories } from "@/app/lib/categories";
 export type FilterProps = {
   onUpdateFilters: (updates: Record<string, string | null>) => void;
   currentParams: {
-    [k: string]: string;
+    category?: string;
+    sex?: string;
+    subcategory?: string;
+    color?: string;
+    priceMin?: string;
+    priceMax?: string;
   };
 };
 

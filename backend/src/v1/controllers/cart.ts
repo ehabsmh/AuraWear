@@ -130,7 +130,6 @@ class CartController {
         cartItem,
       });
     } catch (error) {
-      console.log(error);
       if ((error as any).code === 11000) {
         // Handle duplicate key error (e.g., trying to add the same item again)
         return next(
@@ -148,7 +147,6 @@ class CartController {
     try {
       const userId = req.userr?._id;
 
-      console.log(userId);
       if (!userId) {
         res.status(200).json({
           message: "Cart retrieved successfully",

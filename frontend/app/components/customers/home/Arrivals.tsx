@@ -46,7 +46,9 @@ async function Arrivals() {
                 />
                 <div className="self-start">
                   <h3>{product.name}</h3>
-                  <p>${product.price}</p>
+                  <p className="text-gray-600 font-semibold">
+                    {product.price} EGP
+                  </p>
                 </div>
               </Link>
             </CarouselItem>

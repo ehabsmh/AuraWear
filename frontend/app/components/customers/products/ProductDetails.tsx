@@ -22,20 +22,20 @@ const initialState: IInitialState = {
 
 function reducer(
   state: IInitialState,
-  action: { type: string; payload: any; product?: IProduct }
+  action: { type: string; payload: number | string; product?: IProduct }
 ) {
   switch (action.type) {
     case "SET_VARIANT_INDEX":
       return {
         ...state,
-        variantIndex: action.payload,
+        variantIndex: Number(action.payload),
         selectedImage:
-          action.product?.variants[action.payload].images[0] ?? null,
+          action.product?.variants[Number(action.payload)].images[0] ?? null,
       };
     case "SET_SIZE_INDEX":
-      return { ...state, sizeIndex: action.payload };
+      return { ...state, sizeIndex: Number(action.payload) };
     case "SET_SELECTED_IMAGE":
-      return { ...state, selectedImage: action.payload };
+      return { ...state, selectedImage: action.payload as string };
     default:
       return state;
   }
@@ -77,14 +77,14 @@ function ProductDetails({
       type: "SET_SELECTED_IMAGE",
       payload: product.variants[variantIndex].images[0],
     });
-  }, []);
+  }, [product.variants, variantIndex]);
 
   return (
     <>
       <div className="flex flex-col md:items-center">
         <div className="relative w-full aspect-square md:w-[350px] md:h-[350px] 2xl:w-[600px] 2xl:h-[600px]">
           <Image
-            src={selectedImage}
+            src={selectedImage as string}
             alt={product.name}
             fill
             className="object-cover rounded-lg"

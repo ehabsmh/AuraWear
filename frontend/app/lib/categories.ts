@@ -9,10 +9,9 @@ export async function fetchCategories(params: ParamsType | object = {}) {
     const { data }: { data: ICategory[] } = await api.get("/categories", {
       params,
     });
-    console.log(data);
+
     return data;
   } catch (error) {
-    console.error("Error fetching categories:", error);
     throw error;
   }
 }

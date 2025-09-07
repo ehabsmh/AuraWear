@@ -25,7 +25,7 @@ export default function WishlistClient() {
       await deleteWishlistItem(id);
       setItems((prev) => prev.filter((item) => item._id !== id));
       toast.success("Item removed from wishlist");
-    } catch (error) {
+    } catch {
       toast.error("Failed to remove item from wishlist");
     }
   }

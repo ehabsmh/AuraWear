@@ -4,6 +4,7 @@ import { ICartItem } from "@/app/interfaces/Cart";
 import { updateCartItem } from "@/app/lib/cart.client";
 import { Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function CartItemQuantity({
   itemId,
@@ -25,26 +26,26 @@ export default function CartItemQuantity({
     setQty((qty) => (qty > 1 ? qty - 1 : 1));
   }
 
-  const updateQuantity = async (newQty: number) => {
-    setLoading(true);
-    try {
-      const cartItem = await updateCartItem(itemId, { quantity: newQty });
-
-      setItems((prevItems) =>
-        prevItems.map((item) =>
-          item._id === itemId && cartItem ? cartItem : item
-        )
-      );
-    } catch (error) {
-      console.error("Failed to update quantity", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const updateQuantity = async (newQty: number) => {
+      setLoading(true);
+      try {
+        const cartItem = await updateCartItem(itemId, { quantity: newQty });
+
+        setItems((prevItems) =>
+          prevItems.map((item) =>
+            item._id === itemId && cartItem ? cartItem : item
+          )
+        );
+      } catch (error) {
+        if (error instanceof Error) toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     updateQuantity(qty);
-  }, [qty]);
+  }, [qty, itemId, setItems]);
 
   return (
     <div className="flex items-center gap-2">

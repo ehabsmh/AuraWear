@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { BiCreditCard } from "react-icons/bi";
 import { TbCreditCardRefund, TbHours24, TbTruckDelivery } from "react-icons/tb";
 

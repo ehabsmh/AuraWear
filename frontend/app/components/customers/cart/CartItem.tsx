@@ -5,7 +5,7 @@ import Image from "next/image";
 import CartItemQuantity from "./CartItemQuantity";
 import { Delete } from "lucide-react";
 import { handleDeleteCartItem } from "@/app/lib/utils";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function CartItem({
   item,
@@ -16,12 +16,10 @@ function CartItem({
 }) {
   const variant = item.productId.variants.at(item.variantIndex);
   const size = variant?.sizes.at(item.sizeIndex);
+  const router = useRouter();
 
   return (
-    <Link
-      href={`/shop/${item.productId.slug}`}
-      className="relative flex items-center gap-4 dark:bg-nav bg-white p-4 rounded-xl shadow cursor-pointer hover:bg-secondary-light/5 duration-150"
-    >
+    <div className="relative flex items-center gap-4 dark:bg-nav bg-white p-4 rounded-xl shadow">
       {size && (
         <>
           {size.stock > 0 ? (
@@ -45,7 +43,8 @@ function CartItem({
         height={96}
         src={item.productVariantImage}
         alt={`${item.productId.name} - ${variant?.color} - ${size?.size}`}
-        className="w-24 h-24 object-cover rounded-lg"
+        onClick={() => router.push(`/shop/${item.productId.slug}`)}
+        className="w-24 h-24 object-cover rounded-lg cursor-pointer"
       />
       <div className="flex-1">
         <h3 className="font-semibold text-lg">{item.productId.name}</h3>
@@ -61,7 +60,7 @@ function CartItem({
         />
       </div>
       <div className="text-lg font-semibold">{item.pricePerQuantity} EGP</div>
-    </Link>
+    </div>
   );
 }
 

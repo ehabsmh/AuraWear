@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Delete } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 function OrderCard({
@@ -15,7 +14,6 @@ function OrderCard({
   order: IOrder;
   setOrders: React.Dispatch<React.SetStateAction<IOrder[]>>;
 }) {
-  const router = useRouter();
   async function handleDeleteItem(
     orderId: string,
     orderItemId: string,

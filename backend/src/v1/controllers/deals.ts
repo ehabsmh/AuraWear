@@ -81,7 +81,6 @@ class DealsController {
 
       res.status(200).json(deals);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

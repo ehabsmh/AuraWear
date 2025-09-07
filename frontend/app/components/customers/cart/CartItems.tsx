@@ -6,7 +6,7 @@ import { useState } from "react";
 import Order from "../orders/Order";
 
 export default function CartItems({ cart }: { cart?: ICartResponse["cart"] }) {
-  const [items, setItems] = useState<ICartItem[]>(cart?.items || []);
+  const [items, setItems] = useState<ICartItem[]>(cart?.items ?? []);
 
   const totalItems = items.length || 0;
   const totalPrice = items.reduce(

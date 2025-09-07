@@ -13,18 +13,6 @@ function AddToWishlist({ productId }: { productId: string }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useAuth();
 
-  async function checkExistence() {
-    setIsLoading(true);
-    try {
-      const item = await checkItemExistence(productId);
-      return item;
-    } catch (error) {
-      return null;
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   async function handleDelete() {
     try {
       if (itemExists) {
@@ -48,9 +36,21 @@ function AddToWishlist({ productId }: { productId: string }) {
   }
 
   useEffect(() => {
+    async function checkExistence() {
+      setIsLoading(true);
+      try {
+        const item = await checkItemExistence(productId);
+        return item;
+      } catch {
+        return null;
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
     const checkItem = async () => {
       const exists = await checkExistence();
-      setItemExists(exists?._id!);
+      setItemExists(exists?._id || null);
     };
 
     if (user) {

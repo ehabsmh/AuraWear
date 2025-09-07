@@ -27,5 +27,5 @@ export interface IProduct {
   subcategoryId: Schema.Types.ObjectId;
   mainImage?: string;
   variants: IVariant[];
-  sold?: number;
+  sold: number;
 }

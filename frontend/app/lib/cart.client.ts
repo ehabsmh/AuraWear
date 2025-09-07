@@ -1,5 +1,7 @@
+/*@typescript-eslint/no-explicit-any*/
+
 import { AxiosError } from "axios";
-import { ICartItem, ICartResponse } from "../interfaces/Cart";
+import { ICartItem } from "../interfaces/Cart";
 import api from "../config/axios.config";
 
 export async function addToCart(item: {
@@ -42,7 +44,7 @@ export async function updateCartItem(
 
 export async function removeCartItem(itemId: ICartItem["_id"]) {
   try {
-    const { data }: { data: { message: string; cartItem: any } } =
+    const { data }: { data: { message: string; cartItem: ICartItem } } =
       await api.delete(`/cart/${itemId}`);
 
     return data.message;

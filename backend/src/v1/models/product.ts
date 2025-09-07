@@ -1,9 +1,6 @@
-// models/product.ts
 import mongoose, { Schema, model, Types } from "mongoose";
 import { IProduct, ISize, IVariant } from "../interfaces/product";
 import slugify from "slugify";
-
-// ----------- Subdocuments Schemas -----------
 
 const SizeSchema = new Schema<ISize>(
   {
@@ -24,8 +21,6 @@ const VariantSchema = new Schema<IVariant>(
   },
   { _id: false }
 );
-
-// ----------- Main Product Schema -----------
 
 const ProductSchema = new Schema<IProduct>(
   {
@@ -62,6 +57,5 @@ const ProductSchema = new Schema<IProduct>(
   { timestamps: true }
 );
 
-// -------------------- Export --------------------
 const Product = model<IProduct>("Product", ProductSchema);
 export default Product;

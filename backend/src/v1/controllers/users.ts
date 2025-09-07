@@ -138,7 +138,6 @@ class UsersController {
 
       res.json({ message: "User verified successfully.", user });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -172,7 +171,6 @@ class UsersController {
 
       res.json({ message: "Verification code has been resent to your email." });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -412,8 +410,6 @@ class UsersController {
         { new: true }
       );
 
-      console.log("Updated user:", updatedUser);
-
       if (!updatedUser) {
         throw new AppError("User not found.", NotFoundError);
       }
@@ -441,8 +437,6 @@ class UsersController {
 
   static async getUserByEmail(req: Request, res: Response, next: NextFunction) {
     const { email } = req.params;
-
-    console.log(email);
 
     try {
       // Validate user input

@@ -28,7 +28,7 @@ function FilterPrice({ onUpdateFilters, currentParams }: FilterProps) {
 
       <div className="flex items-center justify-between">
         <p className="text-sm">
-          Price: ${priceRange[0]} - ${priceRange[1]}
+          Price: {priceRange[0]} - {priceRange[1]} EGP
         </p>
         <button
           onClick={onPriceChange}

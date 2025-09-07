@@ -17,8 +17,6 @@ function LoginWithCred() {
   async function onSubmit(data: { email: string; password: string }) {
     const result = await login(data);
     if (result?.user) {
-      console.log("Login successful:", result.user);
-
       setUser(result.user);
       router.replace("/");
       router.refresh();

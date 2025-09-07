@@ -122,7 +122,6 @@ export default async function Page({
                   key={p._id}
                   className="group overflow-hidden rounded-2xl border-0 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
                 >
-                  {/* Image */}
                   <div className="relative aspect-[4/5] w-full overflow-hidden">
                     <Image
                       src={p.mainImage}

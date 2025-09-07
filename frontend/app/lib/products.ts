@@ -25,3 +25,21 @@ export async function fetchNewArrivals() {
     throw error;
   }
 }
+
+export async function getColors(filter: {
+  sex?: string;
+  categoryId?: string;
+  subcategoryId?: string;
+}) {
+  try {
+    const {
+      data,
+    }: { data: { color: string; colorCode: string; count: number }[] } =
+      await api.get("/products/colors", {
+        params: filter,
+      });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

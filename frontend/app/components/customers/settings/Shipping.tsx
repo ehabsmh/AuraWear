@@ -36,7 +36,7 @@ function Shipping() {
     setValue("postalCode", user?.postalCode);
 
     setValue("phone", user?.phone);
-  }, [user]);
+  }, [user, setValue]);
 
   return (
     <TabsContent value="shipping">

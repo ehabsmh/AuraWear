@@ -3,8 +3,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Categories from "./Categories";
 import FilterPrice from "./FilterPrice";
 import FilterColors from "./FilterColors";
-import FilterSizes from "./FilterSizes";
-import FilterStatus from "./FilterStatus";
 
 function Filters() {
   const searchParams = useSearchParams();
@@ -48,14 +46,14 @@ function Filters() {
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
       />
-      <FilterSizes
+      {/* <FilterSizes
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
       />
       <FilterStatus
         onUpdateFilters={updateFilters}
         currentParams={currentParams}
-      />
+      /> */}
     </div>
   );
 }

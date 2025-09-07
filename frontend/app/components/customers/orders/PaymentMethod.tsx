@@ -18,7 +18,6 @@ type PaymentMethodProps = {
 
 export function PaymentMethod({ setValue }: PaymentMethodProps) {
   const [tab, setTab] = useState<"Cash" | "Card">("Cash");
-  console.log(tab);
 
   useEffect(() => {
     setValue("paymentMethod", tab);

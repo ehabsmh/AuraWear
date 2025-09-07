@@ -27,7 +27,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const { user, setUser, loading } = useAuth();
+  const { user, setUser } = useAuth();
   const { scrollY } = useScroll();
   const [isSticky, setIsSticky] = useState(false);
 
@@ -36,7 +36,6 @@ export default function Navbar() {
   const router = useRouter();
 
   const isLoggedIn = user !== null;
-  const cartCount = 3; // dynamic from cart state
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 400) {
@@ -157,11 +156,6 @@ export default function Navbar() {
           {/* Cart */}
           <Link href="/cart" className="relative">
             <ShoppingBag className="h-6 w-6" />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                {cartCount}
-              </span>
-            )}
           </Link>
 
           <ToggleMode />

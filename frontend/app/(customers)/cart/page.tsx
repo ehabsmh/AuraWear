@@ -1,5 +1,6 @@
+export const dynamic = "force-dynamic";
+
 import CartItems from "@/app/components/customers/cart/CartItems";
-import Order from "@/app/components/customers/orders/Order";
 import { getCart } from "@/app/lib/cart.server";
 
 export default async function CartPage() {

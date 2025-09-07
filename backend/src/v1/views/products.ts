@@ -25,5 +25,6 @@ productsRouter.put(
 productsRouter.delete("/:id", auth, isAdmin, ProductsController.delete);
 productsRouter.get("/", ProductsController.all);
 productsRouter.get("/latest", ProductsController.latest);
+productsRouter.get("/colors", ProductsController.getColors);
 
 export default productsRouter;

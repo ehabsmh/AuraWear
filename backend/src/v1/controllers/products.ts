@@ -3,7 +3,7 @@ import Product from "../models/product";
 import { addImagesToProduct } from "../service/products";
 import { createProductSchema } from "../validations/products";
 import AppError, { ErrorName } from "../service/error";
-import { deleteImages, uploadStream } from "../service/cloudinary-handling";
+import { deleteImages } from "../service/cloudinary-handling";
 import { getPaginatedProducts } from "../utils/products";
 
 class ProductsController {
@@ -38,7 +38,6 @@ class ProductsController {
 
       res.status(201).json({ message: "Product added successfully", product });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -85,7 +84,6 @@ class ProductsController {
 
       res.json({ message: "Product updated successfully", product });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -113,7 +111,7 @@ class ProductsController {
 
   static async all(req: Request, res: Response, next: NextFunction) {
     try {
-      const { slug, sex, category, subcategory, priceMin, priceMax } =
+      const { slug, sex, category, subcategory, priceMin, priceMax, color } =
         req.query;
 
       // If slug is provided, return the single product
@@ -138,7 +136,9 @@ class ProductsController {
       if (priceMin && priceMax) {
         filter.price = { $gte: Number(priceMin), $lte: Number(priceMax) };
       }
+      if (color) filter["variants.color"] = { $in: [color] };
 
+      // Get paginated products based on filter
       const result = await getPaginatedProducts(req.query, filter);
       res.json(result);
     } catch (error) {
@@ -173,6 +173,45 @@ class ProductsController {
       });
 
       res.json({ total: count, page, limit, products });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getColors(req: Request, res: Response, next: NextFunction) {
+    try {
+      const sex = req.query.sex;
+      const categoryId = req.query.category;
+      const subcategoryId = req.query.subcategoryId;
+
+      const filter: any = {};
+      if (sex) filter.sex = sex;
+      if (categoryId) filter.categoryId = categoryId;
+      if (subcategoryId) filter.subcategoryId = subcategoryId;
+
+      const colors = await Product.distinct("variants.color");
+      const productsCount = await Promise.all(
+        colors.map(async (color) => {
+          // get count of products for each color
+          const count = await Product.countDocuments({
+            "variants.color": color,
+            ...filter,
+          });
+
+          // get color code of this color
+          const product = await Product.findOne({
+            "variants.color": color,
+          });
+
+          const productVariant = product?.variants.find(
+            (variant) => variant.color === color
+          );
+          const colorCode = productVariant?.colorCode;
+
+          return { color, colorCode, count };
+        })
+      );
+      res.json(productsCount);
     } catch (error) {
       next(error);
     }

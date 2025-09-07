@@ -1,6 +1,5 @@
 import WishlistClient from "@/app/components/customers/wishlist/WishlistClient";
 import WishlistSkeleton from "@/app/components/customers/wishlist/WishlistSkeleton";
-import { Heart } from "lucide-react";
 import { Suspense } from "react";
 
 export default function WishlistPage() {

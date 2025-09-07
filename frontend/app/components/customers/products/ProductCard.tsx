@@ -15,12 +15,6 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
       )}
 
-      {/* {product.label && (
-        <div className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded">
-          {product.label}
-        </div>
-      )} */}
-
       <div className="w-full aspect-auto md:aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
         <Link href={`/shop/${product.slug}`}>
           <Image
@@ -34,26 +28,19 @@ function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <div className="mt-2 space-y-1">
-        {/* <div className="flex items-center gap-1 text-sm text-yellow-500">
-          <Star className="w-4 h-4 fill-yellow-500" />
-          <span>
-            {product.reviews} review{product.reviews !== 1 && "s"}
-          </span>
-        </div> */}
-
         <h3 className="text-sm font-semibold line-clamp-2">{product.name}</h3>
 
         <div className="text-sm">
           <span
-            className={`  ${product.discountPrice ? "line-through" : ""} ${
+            className={`${product.discountPrice ? "line-through" : ""} ${
               product.discountPrice ? "text-red-500" : "text-gray-400"
             } mr-2`}
           >
-            ${product.price.toFixed(2)}
+            {product.price.toFixed(2)} EGP
           </span>
           {product.discountPrice && (
             <span className="text-gray-400 font-semibold">
-              ${product.discountPrice?.toFixed(2)}
+              {product.discountPrice?.toFixed(2)} EGP
             </span>
           )}
         </div>

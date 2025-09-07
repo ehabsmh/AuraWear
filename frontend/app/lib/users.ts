@@ -70,8 +70,6 @@ export async function logout() {
   try {
     const response = await api.post("/auth/logout");
     if (response.status === 200) {
-      // Clear the cookie or token here if necessary
-      console.log("Logout successful");
       return true;
     }
   } catch (error) {
@@ -82,7 +80,6 @@ export async function logout() {
 
 export async function updateShippingInfo(payload: IShippingInfo) {
   try {
-    console.log(payload);
     const { data }: { data: { message: string; updatedUser: IUser } } =
       await api.put("/auth/shipping", payload);
 

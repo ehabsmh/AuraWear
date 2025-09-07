@@ -47,7 +47,6 @@ class WishlistController {
 
       res.json({ message: "Wishlist item removed successfully" });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

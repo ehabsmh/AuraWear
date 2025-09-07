@@ -1,8 +1,7 @@
 import Filters from "@/app/components/customers/filters/Filters";
-import { IProduct } from "@/app/interfaces/Product";
-import { fetchProducts } from "@/app/lib/products";
 import Products from "@/app/components/customers/products/Products";
 import Subcategories from "@/app/components/general/Subcategories";
+import { Suspense } from "react";
 
 interface PageProps {
   searchParams?: {
@@ -21,20 +20,6 @@ async function Page({ searchParams }: PageProps) {
   const params = await searchParams;
   const sex = params?.sex;
   const category = params?.category;
-  // console.log(params.sex, params.category);
-
-  // const color = params?.color ?? null;
-  // const size = params?.size ?? null;
-  // const price = params?.price ?? null;
-
-  const { products, totalPages, totalItems, limit } = (await fetchProducts(
-    params
-  )) as {
-    products: IProduct[];
-    totalPages: number;
-    totalItems: number;
-    limit: number;
-  };
 
   return (
     <section className="mt-3 md:mt-0">
@@ -43,16 +28,41 @@ async function Page({ searchParams }: PageProps) {
           <Filters />
           <section className="md:px-6 w-full">
             <Subcategories sex={sex} category={category} />
-            <Products
-              products={products}
-              totalPages={totalPages}
-              totalItems={totalItems}
-              limit={limit}
-            />
+            <Suspense
+              key={JSON.stringify(params)}
+              fallback={<ProductsFallback />}
+            >
+              <Products params={params ?? {}} />
+            </Suspense>
           </section>
         </div>
       </div>
     </section>
+  );
+}
+
+function ProductsFallback() {
+  return (
+    <>
+      <div className="flex md:flex-row flex-col flex-wrap md:items-center justify-between mb-6 text-sm">
+        <div className="h-4 w-40 bg-gray-200 animate-pulse rounded"></div>
+      </div>
+
+      <div className="grid max-sm:grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6 gap-3">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
+            key={i}
+            className="rounded-lg border bg-white shadow-sm p-3 flex flex-col gap-3 animate-pulse"
+          >
+            <div className="h-40 w-full bg-gray-200 rounded-md" />
+            {/* product name */}
+            <div className="h-4 w-3/4 bg-gray-200 rounded" />
+            {/* product price */}
+            <div className="h-4 w-1/2 bg-gray-200 rounded" />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 

@@ -1,11 +1,10 @@
 import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "../config/axios.config";
-import { ICartItem, ICartResponse } from "../interfaces/Cart";
+import { ICartResponse } from "../interfaces/Cart";
 
 export async function getCart() {
   try {
-    console.log("XXXX");
     const cookie = (await cookies()).get("Authorization")?.value;
     if (!cookie) return null;
 
@@ -15,11 +14,9 @@ export async function getCart() {
 
     return data;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      throw new Error(
-        error.response?.data.message ||
-          "Failed to fetch cart. Please try again."
-      );
-    }
+    if (error instanceof AxiosError)
+      throw new Error(error.response?.data.message);
+
+    throw new Error("Failed to fetch cart. Please try again.");
   }
 }
