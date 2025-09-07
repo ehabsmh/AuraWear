@@ -13,11 +13,12 @@
 ## 🛍️ User Features
 
 - 🔑 Register & login using JWT + Cookies or Google Sign-In
-- 🔎 Browse products with filters (price, color, category)
+- 🔎 Browse products with advanced filters (price, color, category)
 - 🛒 Shopping cart and wishlist
 - 💳 Secure checkout with Paymob payment integration
 - 📦 Track orders with history & details
 - 🌙 Dark / Light mode toggle
+- ✨ Pretty and simple UI with animation and skeletons
 
 ## 🔐 Admin Features
 
