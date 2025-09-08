@@ -17,6 +17,7 @@
 - 🛒 Shopping cart and wishlist
 - 💳 Secure checkout with Paymob payment integration
 - 📦 Track orders with history & details
+- 🚮 Delete items from orders while it is pending or processing
 - 🌙 Dark / Light mode toggle
 - ✨ Pretty and simple UI with animation and skeletons
 
