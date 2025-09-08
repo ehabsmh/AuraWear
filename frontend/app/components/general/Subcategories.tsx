@@ -75,10 +75,10 @@ function Subcategories({ sex, category }: SubcategoryProps) {
                 className={`flex items-center justify-center w-[6rem] h-[6rem] md:w-28 md:h-28 rounded-full text-center font-medium cursor-pointer transition-all duration-300 ${
                   currentSubcategory === subcategory._id
                     ? "bg-secondary text-white shadow-lg scale-105"
-                    : "bg-gray-200 hover:bg-gray-300"
+                    : "bg-gray-200 hover:bg-gray-300 dark:bg-nav"
                 }`}
               >
-                {subcategory.name}
+                <p className="text-sm">{subcategory.name}</p>
               </div>
             </CarouselItem>
           ))}

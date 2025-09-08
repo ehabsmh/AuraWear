@@ -14,11 +14,11 @@ interface IInitialState {
   selectedImage: string | null;
 }
 
-const initialState: IInitialState = {
+const initialState = (product: IProduct): IInitialState => ({
   variantIndex: 0,
   sizeIndex: 0,
-  selectedImage: null,
-};
+  selectedImage: product.variants[0]?.images[0] ?? null,
+});
 
 function reducer(
   state: IInitialState,
@@ -50,6 +50,7 @@ function ProductDetails({
 }) {
   const [{ variantIndex, sizeIndex, selectedImage }, dispatch] = useReducer(
     reducer,
+    product,
     initialState
   );
 
@@ -71,13 +72,6 @@ function ProductDetails({
   function handleSizeChange(index: number) {
     dispatch({ type: "SET_SIZE_INDEX", payload: index });
   }
-
-  useEffect(() => {
-    dispatch({
-      type: "SET_SELECTED_IMAGE",
-      payload: product.variants[variantIndex].images[0],
-    });
-  }, [product.variants, variantIndex]);
 
   return (
     <>

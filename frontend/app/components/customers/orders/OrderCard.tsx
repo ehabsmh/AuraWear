@@ -87,7 +87,7 @@ function OrderCard({
         {/* Order summary */}
         <div className="flex justify-between text-sm">
           <span>Date: {order.createdAt}</span>
-          <span className="font-semibold">${order.total}</span>
+          <span className="font-semibold">{order.total} EGP</span>
         </div>
         <Separator />
 
@@ -132,7 +132,7 @@ function OrderCard({
 
                     <span>×{product.quantity}</span>
                   </div>
-                  <span>${product.pricePerQuantity}</span>
+                  <span>{product.pricePerQuantity} EGP</span>
                 </div>
               </li>
             ))}

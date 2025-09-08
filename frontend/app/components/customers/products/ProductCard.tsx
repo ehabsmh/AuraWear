@@ -11,14 +11,19 @@ function ProductCard({ product }: ProductCardProps) {
     <div className="relative group">
       {product.discountPrice && (
         <div className="absolute top-2 left-2 bg-green-100 text-green-600 text-sm font-semibold px-2 py-1 rounded">
-          {((product.discountPrice / product.price) * 100).toFixed(0)}%
+          -
+          {(
+            ((product.price - product.discountPrice) / product.price) *
+            100
+          ).toFixed(0)}
+          %
         </div>
       )}
 
       <div className="w-full aspect-auto md:aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
         <Link href={`/shop/${product.slug}`}>
           <Image
-            src={product.mainImage || "/men-fashion.jpg"}
+            src={product.mainImage ? product.mainImage : "/men-fashion.jpg"}
             alt={product.name}
             width={300}
             height={400}

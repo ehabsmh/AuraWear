@@ -212,7 +212,7 @@ class OrdersController {
 
       // If only one product in an order, the whole order gets removed
       if (orderItems.length === 1) {
-        order.total -= orderItem.pricePerQuantity!;
+        order.total -= orderItem.pricePerQuantity;
         await order.deleteOne();
         res.json({
           message: "Order deleted successfully!",

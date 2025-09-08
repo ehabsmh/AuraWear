@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export default async function OrdersPage() {
   return (
-    <div className="w-11/12 mx-auto">
+    <div className="w-11/12 mx-auto my-3">
       <Suspense
         fallback={
           <div className="grid gap-6 md:grid-cols-2">
