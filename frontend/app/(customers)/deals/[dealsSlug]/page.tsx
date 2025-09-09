@@ -117,100 +117,98 @@ export default async function Page({
                 .slice(0, 4) || [];
 
             return (
-              <>
-                <Card
-                  key={p._id}
-                  className="group overflow-hidden rounded-2xl border-0 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
-                >
-                  <div className="relative aspect-[4/5] w-full overflow-hidden">
-                    <Image
-                      src={p.mainImage}
-                      alt={p.name}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {percentOff > 0 && (
-                      <div className="absolute left-3 top-3">
-                        <Badge className="bg-black/80 text-white">
-                          -{percentOff}%
-                        </Badge>
-                      </div>
-                    )}
+              <Card
+                key={p._id}
+                className="group overflow-hidden rounded-2xl border-0 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
+              >
+                <div className="relative aspect-[4/5] w-full overflow-hidden">
+                  <Image
+                    src={p.mainImage}
+                    alt={p.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {percentOff > 0 && (
+                    <div className="absolute left-3 top-3">
+                      <Badge className="bg-black/80 text-white">
+                        -{percentOff}%
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <CardContent className="flex flex-col flex-1 p-4">
+                  <Link
+                    href={`/shop/${p.slug}`}
+                    className="line-clamp-2 font-semibold text-[0.95rem] hover:underline"
+                  >
+                    {p.name}
+                  </Link>
+
+                  {/* Price */}
+                  <div className="mt-2">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-bold">
+                        EGP {finalPrice}
+                      </span>
+                      {showOriginal && (
+                        <span className="text-sm line-through text-muted-foreground">
+                          EGP {originalPrice}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Content */}
-                  <CardContent className="flex flex-col flex-1 p-4">
-                    <Link
-                      href={`/shop/${p.slug}`}
-                      className="line-clamp-2 font-semibold text-[0.95rem] hover:underline"
-                    >
-                      {p.name}
-                    </Link>
-
-                    {/* Price */}
-                    <div className="mt-2">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-lg font-bold">
-                          EGP {finalPrice}
+                  {/* Colors */}
+                  {colors.length > 0 && (
+                    <div className="mt-3 flex items-center gap-2">
+                      {colors.map((c, idx) => (
+                        <span
+                          key={idx}
+                          className={cn(
+                            "h-5 w-5 rounded-full border",
+                            typeof c === "string" && c.startsWith("#")
+                              ? ""
+                              : "bg-gray-200"
+                          )}
+                          style={
+                            typeof c === "string" && c.startsWith("#")
+                              ? { backgroundColor: c }
+                              : undefined
+                          }
+                          title={String(c)}
+                        />
+                      ))}
+                      {p.variants.length > colors.length && (
+                        <span className="text-xs text-muted-foreground">
+                          +{p.variants.length - colors.length} more
                         </span>
-                        {showOriginal && (
-                          <span className="text-sm line-through text-muted-foreground">
-                            EGP {originalPrice}
-                          </span>
-                        )}
-                      </div>
+                      )}
                     </div>
+                  )}
 
-                    {/* Colors */}
-                    {colors.length > 0 && (
-                      <div className="mt-3 flex items-center gap-2">
-                        {colors.map((c, idx) => (
-                          <span
-                            key={idx}
-                            className={cn(
-                              "h-5 w-5 rounded-full border",
-                              typeof c === "string" && c.startsWith("#")
-                                ? ""
-                                : "bg-gray-200"
-                            )}
-                            style={
-                              typeof c === "string" && c.startsWith("#")
-                                ? { backgroundColor: c }
-                                : undefined
-                            }
-                            title={String(c)}
-                          />
-                        ))}
-                        {p.variants.length > colors.length && (
-                          <span className="text-xs text-muted-foreground">
-                            +{p.variants.length - colors.length} more
-                          </span>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Actions */}
-                    <div className="mt-4 flex gap-2">
-                      <Link href={`/shop/${p.slug}`} className="flex-1">
-                        <Button variant="default" className="w-full rounded-xl">
-                          View
-                        </Button>
-                      </Link>
-                      <Button variant="outline" className="rounded-xl" asChild>
-                        <Link href={`/products/${p.slug}`}>Choose Size</Link>
+                  {/* Actions */}
+                  <div className="mt-4 flex gap-2">
+                    <Link href={`/shop/${p.slug}`} className="flex-1">
+                      <Button variant="default" className="w-full rounded-xl">
+                        View
                       </Button>
-                    </div>
+                    </Link>
+                    <Button variant="outline" className="rounded-xl" asChild>
+                      <Link href={`/products/${p.slug}`}>Choose Size</Link>
+                    </Button>
+                  </div>
 
-                    {/* Footer meta */}
-                    <div className="mt-3 text-xs text-muted-foreground">
-                      {p.sold && p.sold > 0
-                        ? `${p.sold} sold`
-                        : "Be the first to buy"}
-                    </div>
-                  </CardContent>
-                </Card>
-              </>
+                  {/* Footer meta */}
+                  <div className="mt-3 text-xs text-muted-foreground">
+                    {p.sold && p.sold > 0
+                      ? `${p.sold} sold`
+                      : "Be the first to buy"}
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
