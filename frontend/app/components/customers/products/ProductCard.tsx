@@ -20,7 +20,7 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
       )}
 
-      <div className="w-full aspect-auto md:aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
+      <div className="w-full aspect-square md:aspect-[3/4] overflow-hidden rounded-md bg-gray-100 cursor-pointer">
         <Link href={`/shop/${product.slug}`}>
           <Image
             src={product.mainImage ? product.mainImage : "/men-fashion.jpg"}

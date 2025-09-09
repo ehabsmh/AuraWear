@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShoppingBag, User, Menu } from "lucide-react";
 import {
   DropdownMenu,
@@ -30,6 +30,7 @@ export default function Navbar() {
   const { user, setUser } = useAuth();
   const { scrollY } = useScroll();
   const [isSticky, setIsSticky] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const pathname = usePathname();
 
@@ -44,6 +45,10 @@ export default function Navbar() {
       setIsSticky(false);
     }
   });
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <motion.header
@@ -160,7 +165,7 @@ export default function Navbar() {
 
           <ToggleMode />
 
-          <Sheet>
+          <Sheet open={open} onOpenChange={setOpen}>
             {/* Trigger (hamburger icon) */}
             <SheetTrigger className="md:hidden">
               <Menu className="h-6 w-6" />

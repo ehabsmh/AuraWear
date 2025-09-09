@@ -57,7 +57,7 @@ function AddToCart({
       >
         Choose quantity:
       </label>
-      <div className="flex w-full gap-3">
+      <div className="md:flex w-full gap-3 md:mx-auto">
         <div className="w-36 relative flex items-center">
           <button
             type="button"
@@ -86,7 +86,7 @@ function AddToCart({
             <Plus className="dark:text-gray-300 text-gray-700" />
           </button>
         </div>
-        <div className="flex gap-4">
+        <div className="md:flex gap-4 inline-block mt-3 md:mt-0">
           {isCartItem ? (
             <button
               type="button"

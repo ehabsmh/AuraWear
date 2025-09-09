@@ -63,11 +63,11 @@ function AddToWishlist({ productId }: { productId: string }) {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <>
+        <div className="inline-block">
           {itemExists ? (
             <div
               onClick={handleDelete}
-              className="flex items-center bg-gray-300 text-black gap-2 px-4 py-2 rounded hover:bg-gray-500 transition duration-150"
+              className=" flex items-center bg-gray-300 text-black gap-2 px-4 py-2 rounded hover:bg-gray-500 transition duration-150"
             >
               <HeartMinus className="text-red-500" />
               <button>Remove from Wishlist</button>
@@ -81,7 +81,7 @@ function AddToWishlist({ productId }: { productId: string }) {
               <button>Add to Wishlist</button>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Variants from "./Variants";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { IProduct } from "@/app/interfaces/Product";
 import AddToCart from "../cart/AddToCart";
 import { ICartItem, ICartResponse } from "@/app/interfaces/Cart";
@@ -140,7 +140,7 @@ function ProductDetails({
           onSizeChange={handleSizeChange}
         />
 
-        <div className="flex gap-3 items-end">
+        <div className="flex flex-col justify-center items-center md:flex-row md:justify-start gap-3 md:items-end">
           <AddToCart
             cartItemPayload={{
               productId: product._id,

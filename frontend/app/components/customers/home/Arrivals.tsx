@@ -34,14 +34,14 @@ async function Arrivals() {
             >
               <Link
                 href={`/shop/${product.slug}`}
-                className="p-1 flex flex-col items-center justify-center"
+                className="p-1 flex flex-col items-center justify-center overflow-hidden"
               >
                 <Image
                   src={product.mainImage}
                   alt={product.name}
                   width={300}
                   height={300}
-                  className="w-[180px] h-[180px] max-w-[180px] max-h-[180px] md:w-[300px] md:h-[300px] md:max-w-[300px] md:max-h-[300px] object-contain rounded-md mb-2"
+                  className="w-[180px] h-[180px] max-w-[180px] max-h-[180px] md:w-[300px] md:h-[300px] md:max-w-[300px] md:max-h-[300px] object-contain rounded-md mb-2 hover:scale-110 duration-300"
                   quality={100}
                 />
                 <div className="self-start">

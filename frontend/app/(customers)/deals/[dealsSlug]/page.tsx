@@ -33,7 +33,7 @@ export default async function Page({
 }: {
   params: { dealsSlug: string };
 }) {
-  const { dealsSlug } = params;
+  const { dealsSlug } = await params;
   const deal = await fetchDeal(dealsSlug);
 
   const discountPct = (deal.discountPercentage || 0) * 100;
@@ -225,11 +225,25 @@ export default async function Page({
             before it ends.
           </p>
           <div className="mt-2">
-            <Link href="/collections/men">
-              <Button size="lg" className="rounded-xl">
-                Explore Men’s Collection
-              </Button>
-            </Link>
+            {deal.sex === "female" ? (
+              <Link href="/shop?sex=female">
+                <Button size="lg" className="rounded-xl">
+                  Explore Female’s Collection
+                </Button>
+              </Link>
+            ) : deal.sex === "male" ? (
+              <Link href="/shop?sex=male">
+                <Button size="lg" className="rounded-xl">
+                  Explore Male’s Collection
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/shop">
+                <Button size="lg" className="rounded-xl">
+                  Explore All Collections
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

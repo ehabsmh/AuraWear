@@ -23,12 +23,12 @@ function CartItem({
       {size && (
         <>
           {size.stock > 0 ? (
-            <p className="text-gray-500 absolute right-0 top-0 p-2 text-sm rounded-full dark:bg-gray-500 bg-gray-200 flex items-center justify-center">
+            <p className="text-gray-500 absolute right-0 top-0 p-2 text-[0.65rem] md:text-sm rounded-full dark:bg-gray-500 bg-gray-200 flex items-center justify-center">
               <span className="font-semibold text-black">{size.stock}</span>
-              <span className="mx-1 dark:text-gray-300">at stock</span>
+              <span className="mx-1 dark:text-gray-200">at stock</span>
             </p>
           ) : (
-            <p className="text-red-500 font-semibold absolute right-0 top-0 p-2 text-sm rounded-full bg-gray-200 flex items-center justify-center">
+            <p className="text-gray-200 font-semibold absolute right-0 top-0 p-2 text-sm rounded-full bg-red-400 flex items-center justify-center">
               Out of stock
             </p>
           )}
@@ -44,12 +44,14 @@ function CartItem({
         src={item.productVariantImage}
         alt={`${item.productId.name} - ${variant?.color} - ${size?.size}`}
         onClick={() => router.push(`/shop/${item.productId.slug}`)}
-        className="w-24 h-24 object-cover rounded-lg cursor-pointer"
+        className="md:w-24 md:h-24 w-16 h-16 object-cover rounded-lg cursor-pointer"
       />
-      <div className="flex-1">
-        <h3 className="font-semibold text-lg">{item.productId.name}</h3>
+      <div className="flex-1 text-sm md:text-base">
+        <h3 className="font-semibold md:text-lg">{item.productId.name}</h3>
         <div className="flex gap-3">
-          <p className="dark:text-gray-400 text-gray-500">({variant?.color})</p>
+          <p className="dark:text-gray-400  text-gray-500">
+            ({variant?.color})
+          </p>
           <p className="dark:text-gray-400 text-gray-500">({size?.size})</p>
         </div>
         <p className="dark:text-gray-300 text-gray-700">{item.price} EGP</p>
@@ -59,7 +61,9 @@ function CartItem({
           setItems={setItems}
         />
       </div>
-      <div className="text-lg font-semibold">{item.pricePerQuantity} EGP</div>
+      <div className="font-semibold text-sm md:text-lg">
+        {item.pricePerQuantity} EGP
+      </div>
     </div>
   );
 }

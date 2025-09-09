@@ -28,7 +28,6 @@ class DealsController {
 
       res.status(201).json({ message: "Deal created successfully", deal });
     } catch (error) {
-      console.error(error);
       next(error);
     }
   }
@@ -41,7 +40,6 @@ class DealsController {
     try {
       const { dealId, productIds } = req.body;
 
-      // Find the deal by ID
       const deal = await Deal.findById(dealId);
       if (!deal) {
         throw new AppError("Deal not found", ErrorName.NotFoundError);
@@ -56,6 +54,21 @@ class DealsController {
           "Products with different sex cannot be added to the deal",
           ErrorName.ValidationError
         );
+
+      const hasBiggerDiscount = products.some(
+        (product) =>
+          product.discountPrice &&
+          (((product.price - product.discountPrice) / product.price) * 100) /
+            100 >
+            deal.discountPercentage
+      );
+
+      if (hasBiggerDiscount) {
+        throw new AppError(
+          "One or more products have a bigger discount than the deal",
+          ErrorName.ValidationError
+        );
+      }
 
       deal.products.push(...productIds);
 

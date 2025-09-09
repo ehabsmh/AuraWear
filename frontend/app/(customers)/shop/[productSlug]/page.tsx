@@ -1,4 +1,5 @@
 import ProductDetails from "@/app/components/customers/products/ProductDetails";
+import SimilarProducts from "@/app/components/customers/products/SimilarProducts";
 import { IProduct } from "@/app/interfaces/Product";
 import { getCart } from "@/app/lib/cart.server";
 import { fetchProducts } from "@/app/lib/products";
@@ -18,6 +19,10 @@ async function Page({
       <div className="container w-11/12 md:w-3/4 mx-auto">
         <div className="md:grid md:grid-cols-2 md:gap-24 md:items-center">
           <ProductDetails product={product} cart={cart} />
+          <SimilarProducts
+            categoryId={product.categoryId}
+            currentProductId={product._id}
+          />
         </div>
       </div>
     </section>
