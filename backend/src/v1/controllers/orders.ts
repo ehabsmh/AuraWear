@@ -12,7 +12,7 @@ import { mongo } from "mongoose";
 
 class OrdersController {
   static async create(req: Request, res: Response, next: NextFunction) {
-    const { shippingInfo, paymentMethod } = req.body;
+    const { shippingInfo } = req.body;
 
     try {
       // Get user ID from request
@@ -110,8 +110,10 @@ class OrdersController {
                 });
               }
             });
-            return product.save();
+
+            await product.save();
           }
+          return product;
         })
       );
 

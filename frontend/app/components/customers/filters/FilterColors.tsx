@@ -30,10 +30,16 @@ function FilterColors({ onUpdateFilters, currentParams }: FilterProps) {
         {colors.map((c) => (
           <li
             key={c.color}
-            onClick={() => onUpdateFilters({ color: c.color })}
+            onClick={() => {
+              onUpdateFilters({
+                color: c.color === currentParams.color ? null : c.color,
+              });
+            }}
             className={`flex items-center justify-between text-sm text-gray-800 ${
-              c.color === currentParams.color ? "bg-gray-200" : ""
-            } p-2 rounded cursor-pointer hover:bg-gray-100 duration-150`}
+              c.color === currentParams.color
+                ? "bg-gray-200 dark:bg-gray-700"
+                : ""
+            } p-2 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 duration-150`}
           >
             <div className="flex items-center gap-2">
               <span

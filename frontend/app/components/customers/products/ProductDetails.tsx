@@ -149,6 +149,7 @@ function ProductDetails({
             }}
             isCartItem={cartItemExists}
             setCartItems={setCartItems}
+            productSlug={product.slug}
           />
 
           <AddToWishlist productId={product._id} />

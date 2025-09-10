@@ -183,11 +183,18 @@ class ProductsController {
       const sex = req.query.sex;
       const categoryId = req.query.category;
       const subcategoryId = req.query.subcategoryId;
+      const priceMin = req.query.priceMin;
+      const priceMax = req.query.priceMax;
 
       const filter: any = {};
       if (sex) filter.sex = sex;
       if (categoryId) filter.categoryId = categoryId;
       if (subcategoryId) filter.subcategoryId = subcategoryId;
+      if (priceMin && !priceMax) filter.price = { $gte: Number(priceMin) };
+      if (priceMax && !priceMin) filter.price = { $lte: Number(priceMax) };
+      if (priceMin && priceMax) {
+        filter.price = { $gte: Number(priceMin), $lte: Number(priceMax) };
+      }
 
       const colors = await Product.distinct("variants.color");
       const productsCount = await Promise.all(

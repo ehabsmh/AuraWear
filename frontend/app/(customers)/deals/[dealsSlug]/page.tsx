@@ -213,7 +213,6 @@ export default async function Page({
           })}
         </div>
 
-        {/* Bottom CTA */}
         <div className="mt-10 flex flex-col items-center gap-3 text-center">
           <h3 className="text-lg font-semibold">
             Don’t miss out on the Summer Essentials
@@ -226,13 +225,13 @@ export default async function Page({
             {deal.sex === "female" ? (
               <Link href="/shop?sex=female">
                 <Button size="lg" className="rounded-xl">
-                  Explore Female’s Collection
+                  Explore Women’s Collection
                 </Button>
               </Link>
             ) : deal.sex === "male" ? (
               <Link href="/shop?sex=male">
                 <Button size="lg" className="rounded-xl">
-                  Explore Male’s Collection
+                  Explore Men’s Collection
                 </Button>
               </Link>
             ) : (

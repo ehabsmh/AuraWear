@@ -14,13 +14,14 @@ usersRouter.post("/login", UsersController.login);
 usersRouter.post("/logout", UsersController.logout);
 
 // OAuth2.0 with Google
-usersRouter.get(
-  "/google",
+usersRouter.get("/google", (req, res, next) => {
+  const returnTo = req.query.returnTo || "/";
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    session: false,
-  })
-);
+    state: returnTo as string,
+  })(req, res, next);
+});
+
 usersRouter.get(
   "/google/callback",
   passport.authenticate("google", {

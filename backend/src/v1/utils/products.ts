@@ -10,7 +10,10 @@ export async function getPaginatedProducts(
   const limit = Number(queryParams.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const products = await Product.find(filter).skip(skip).limit(limit);
+  const products = await Product.find(filter)
+    .skip(skip)
+    .limit(limit)
+    .sort({ createdAt: -1 });
   const count = await Product.countDocuments(filter);
 
   return {

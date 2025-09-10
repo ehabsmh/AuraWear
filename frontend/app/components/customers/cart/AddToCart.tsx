@@ -13,6 +13,7 @@ function AddToCart({
   cartItemPayload,
   isCartItem,
   setCartItems,
+  productSlug,
 }: {
   cartItemPayload: {
     productId: string;
@@ -21,6 +22,7 @@ function AddToCart({
   };
   isCartItem: ICartItem | undefined;
   setCartItems: React.Dispatch<React.SetStateAction<ICartItem[]>>;
+  productSlug: string;
 }) {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
@@ -45,7 +47,7 @@ function AddToCart({
         if (error instanceof Error) toast.error(error.message);
       }
     } else {
-      router.push("/login");
+      router.push(`/login?returnTo=/shop/${productSlug}`);
     }
   };
 

@@ -246,9 +246,9 @@ class UsersController {
       }
       res.clearCookie("Authorization", {
         httpOnly: true,
-        secure: false, // ✅ false in dev (no HTTPS on localhost)
-        sameSite: "lax", // ✅ must be "none" to allow cross-origin
         path: "/",
+        sameSite: "lax",
+        secure: false,
       });
       res.status(200).json({ message: "User logged out successfully." });
     } catch (err) {
@@ -274,8 +274,9 @@ class UsersController {
         secure: ON_PRODUCTION === "true", // Use secure cookies in production
       });
 
-      res.redirect("http://localhost:3000/"); // Redirect to the next step
-      res.json({ message: `Welcome ${user.fullName}` });
+      const returnTo = req.query.state || "/";
+
+      res.redirect(`http://localhost:3000${returnTo}`);
     } catch (error) {
       next(error);
     }

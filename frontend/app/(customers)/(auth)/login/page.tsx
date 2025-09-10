@@ -3,8 +3,11 @@
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import LoginWithCred from "@/app/components/auth/LoginWithCred";
+import { useSearchParams } from "next/navigation";
 
 function LoginPage() {
+  const params = useSearchParams();
+  const returnTo = params.get("returnTo") || "/";
   return (
     <main className="h-[calc(100vh-96px)] flex items-center justify-center p-4">
       <div className="w-full max-w-md dark:bg-nav bg-white shadow-xl rounded-2xl p-8 space-y-6">
@@ -14,7 +17,9 @@ function LoginPage() {
 
         <Link
           className="w-full flex items-center gap-2 justify-center cursor-pointer"
-          href="http://localhost:8080/api/v1/auth/google"
+          href={`http://localhost:8080/api/v1/auth/google?returnTo=${encodeURIComponent(
+            returnTo
+          )}`}
         >
           <FcGoogle className="text-xl" /> Login with Google
         </Link>

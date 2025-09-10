@@ -3,7 +3,7 @@
 import { useAuth } from "@/app/context/AuthContext";
 import { login } from "@/app/lib/users";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 function LoginWithCred() {
@@ -13,12 +13,23 @@ function LoginWithCred() {
     password: string;
   }>();
   const router = useRouter();
+  const params = useSearchParams();
+  const returnTo = params.get("returnTo");
 
   async function onSubmit(data: { email: string; password: string }) {
+    console.log(returnTo);
     const result = await login(data);
     if (result?.user) {
       setUser(result.user);
-      router.replace("/");
+
+      if (returnTo) {
+        // user came from a product
+        router.replace(returnTo);
+      } else {
+        // normal login
+        router.replace("/");
+      }
+
       router.refresh();
     }
   }

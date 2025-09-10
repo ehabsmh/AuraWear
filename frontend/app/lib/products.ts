@@ -30,6 +30,8 @@ export async function getColors(filter: {
   sex?: string;
   categoryId?: string;
   subcategoryId?: string;
+  priceMin?: string;
+  priceMax?: string;
 }) {
   try {
     const {

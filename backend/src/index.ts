@@ -11,8 +11,13 @@ const port = 8080;
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://127.0.0.1:3000"], // Your frontend origin
-    credentials: true, // ✅ Required to allow cookies
+    origin: [
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+      "http://myapp.local:3000",
+      "http://127.0.0.1.nip.io:3000",
+    ],
+    credentials: true,
   })
 );
 
@@ -50,6 +55,8 @@ app.use(
         .json({ name: error.name, message: error.message });
       return;
     }
+
+    console.log(error);
 
     res.status(500).json({ message: "Internal server error" });
   }

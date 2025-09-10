@@ -15,7 +15,7 @@ const CartSchema = new Schema<ICart, {}, {}, {}, ICart["items"]>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true, // Ensure one cart per user
+      unique: true,
     },
     numItems: { type: Number, default: 0 },
     totalPrice: { type: Number, default: 0 },
